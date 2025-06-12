@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
 require("dotenv").config();
+const routes = require("./routes/index");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,6 +19,8 @@ const pool = new Pool({
   password: "postgres",
   port: 5432,
 });
+
+app.use("/api", routes);
 
 // Test route
 app.get("/", async (req, res) => {

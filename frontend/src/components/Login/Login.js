@@ -14,7 +14,7 @@ export default function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const url = `${process.env.REACT_APP_BACKEND_URL}/api/login`;
+      const url = `${process.env.REACT_APP_BACKEND_URL}/api/users/login`;
       const response = await axios.post(url, { email, password });
 
       const { token } = response.data;

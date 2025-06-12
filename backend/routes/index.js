@@ -1,40 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../db");
 
-// GET /api/projects
-router.get("/", async (req, res) => {
-  const result = await pool.query("SELECT * FROM projects");
-  res.json(result.rows);
-});
+// Import all route modules
+const userRoutes = require("./users");
+const projectRoutes = require("./projects");
+const epicRoutes = require("./epics");
+const userStoryRoutes = require("./userStories");
+const taskRoutes = require("./tasks");
+const sprintRoutes = require("./sprints");
+const sprintTaskRoutes = require("./sprintTasks");
+const projectMemberRoutes = require("./projectMembers");
 
-// GET /api/projects/:id/backlog
-router.get("/:id/backlog", async (req, res) => {
-  const { id } = req.params;
-  const result = await pool.query(`
-    SELECT * FROM backlog_items
-    WHERE project_id = $1 AND parent_id IS NULL AND type = 'epic'
-  `, [id]);
-
-  const epics = await Promise.all(result.rows.map(async (epic) => {
-    const stories = await pool.query(`
-      SELECT * FROM backlog_items
-      WHERE parent_id = $1 AND type = 'story'
-    `, [epic.id]);
-
-    const enrichedStories = await Promise.all(stories.rows.map(async (story) => {
-      const tasks = await pool.query(`
-        SELECT * FROM backlog_items
-        WHERE parent_id = $1 AND type = 'task'
-      `, [story.id]);
-
-      return { ...story, tasks: tasks.rows };
-    }));
-
-    return { ...epic, userStories: enrichedStories };
-  }));
-
-  res.json(epics);
-});
+// Mount routes
+router.use("/users", userRoutes);
+router.use("/projects", projectRoutes);
+router.use("/epics", epicRoutes);
+router.use("/userstories", userStoryRoutes);
+router.use("/tasks", taskRoutes);
+router.use("/sprints", sprintRoutes);
+router.use("/sprint-tasks", sprintTaskRoutes);
+router.use("/project-members", projectMemberRoutes);
 
 module.exports = router;
