@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Projects from './components/Project/Project';
 import Backlog from './components/Backlog/Backlog';
 import Sprints from './components/Sprint/SprintBoard';
-import Tasks from "./components/Task/Tasks";
+import Task from "./components/Task/Tasks";
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 // import ProjectBacklog from './pages/project/ProjectBacklog';
@@ -31,11 +31,16 @@ function App() {
           <Route path="/backlog" element={<Backlog />} />
           <Route path="/sprints" element={<Sprints />} />
 
-          {/* <Route path="/projects/:id/backlog" element={<Backlog />} /> */}
-          <Route path="/projects/:id/backlog/epic/:epicId" element={<Epic />} />
-          <Route path="/epic/:epicId/userstory/:storyId" element={<UserStory />} />
-          <Route path="/epic/:epicId/userstory/:storyId/tasks" element={<Tasks />} />
-
+          <Route path="/projects/:projectId/backlog" element={<Backlog />} />
+          <Route path="/projects/:projectId/backlog/epic/:epicId" element={<Epic />} />
+          <Route
+            path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId"
+            element={<UserStory />}
+          />
+          <Route
+            path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId/task/:taskId"
+            element={<Task />}
+          />
         </Routes>
       </div>
       <Footer />

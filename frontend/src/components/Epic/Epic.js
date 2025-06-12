@@ -41,7 +41,7 @@ const dummyBacklog = {
 };
 
 export default function Epic() {
-  const { epicId } = useParams();
+  const { projectId, epicId } = useParams();
   const navigate = useNavigate();
   const [epicData, setEpicData] = useState(null);
 
@@ -55,25 +55,17 @@ export default function Epic() {
     <div className="epic-details-container">
       <h2>Epic: {epicData.title}</h2>
       {epicData.userStories.map((story) => (
-        <div key={story.id} className="story-card"
-        onClick={() => navigate(`/epic/${epicId}/userstory/${story.id}/tasks`)}
->
+        <div
+          key={story.id}
+          className="story-card"
+          onClick={() =>
+            navigate(`/projects/${projectId}/backlog/epic/${epicId}/userstory/${story.id}`)
+          }
+        >
           <h4>User Story: {story.title}</h4>
-          <ul>
-            {story.tasks.map((task) => (
-              <li
-                key={task.id}
-                className="task-item"
-                onClick={() =>
-                  navigate(`/epic/${epicId}/userstory/${story.id}`)
-                }
-              >
-                {task.title}
-              </li>
-            ))}
-          </ul>
         </div>
       ))}
     </div>
+
   );
 }

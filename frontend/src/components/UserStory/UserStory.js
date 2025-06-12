@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const dummyData = {
   epic1: {
@@ -14,40 +14,19 @@ const dummyData = {
           { id: "t3", title: "Connect to API" },
         ],
       },
-      {
-        id: "us2",
-        title: "Login",
-        tasks: [
-          { id: "t4", title: "Design login form" },
-          { id: "t5", title: "Implement token auth" },
-        ],
-      },
-    ],
-  },
-  epic2: {
-    title: "Chat System",
-    userStories: [
-      {
-        id: "us3",
-        title: "Send/Receive messages",
-        tasks: [
-          { id: "t6", title: "Socket integration" },
-          { id: "t7", title: "UI updates" },
-        ],
-      },
     ],
   },
 };
 
 const UserStory = () => {
-  const { epicId, storyId } = useParams();
+  const { epicId, storyId, projectId } = useParams();
   const navigate = useNavigate();
   const [userStoryData, setUserStoryData] = useState(null);
 
   useEffect(() => {
     const epic = dummyData[epicId];
     if (epic) {
-      const story = epic.userStories.find((story) => story.id === storyId);
+      const story = epic.userStories.find((s) => s.id === storyId);
       setUserStoryData(story);
     }
   }, [epicId, storyId]);
@@ -55,11 +34,21 @@ const UserStory = () => {
   if (!userStoryData) return <p>Loading...</p>;
 
   return (
-    <div className="user-story-container">
+    <div>
       <h2>User Story: {userStoryData.title}</h2>
       <ul>
         {userStoryData.tasks.map((task) => (
-          <li key={task.id}>{task.title}</li>
+          <li
+            key={task.id}
+            onClick={() =>
+              navigate(
+                `/projects/${projectId}/backlog/epic/${epicId}/userstory/${storyId}/task/${task.id}`
+              )
+            }
+            style={{ cursor: "pointer", color: "blue" }}
+          >
+            {task.title}
+          </li>
         ))}
       </ul>
     </div>
