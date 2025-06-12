@@ -1,0 +1,23 @@
+.backlog-container {
+    padding: 20px;
+  }
+  
+  .epic-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .epic-card {
+    padding: 15px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s;
+  }
+  
+  .epic-card:hover {
+    background: #e8e8e8;
+  }
+  

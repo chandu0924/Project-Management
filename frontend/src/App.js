@@ -1,0 +1,46 @@
+// src/App.js
+import React from 'react';
+import "./App.css";
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import Sidebar from './components/Sidebar/Sidebar';
+import Footer from './components/Footer/Footer';
+
+import Dashboard from './components/Dashboard/Dashboard';
+import Projects from './components/Project/Project';
+import Backlog from './components/Backlog/Backlog';
+import Sprints from './components/Sprint/SprintBoard';
+import Tasks from "./components/Task/Tasks";
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
+// import ProjectBacklog from './pages/project/ProjectBacklog';
+import Epic from './components/Epic/Epic';
+import UserStory from './components/UserStory/UserStory';
+
+function App() {
+  return (
+    <div className="app">
+      <Navbar />
+      <Sidebar />
+      <div className="main-content" style={{ marginLeft: '200px', paddingTop: '60px', paddingBottom: '40px', padding: '20px' }}>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/backlog" element={<Backlog />} />
+          <Route path="/sprints" element={<Sprints />} />
+
+          {/* <Route path="/projects/:id/backlog" element={<Backlog />} /> */}
+          <Route path="/projects/:id/backlog/epic/:epicId" element={<Epic />} />
+          <Route path="/epic/:epicId/userstory/:storyId" element={<UserStory />} />
+          <Route path="/epic/:epicId/userstory/:storyId/tasks" element={<Tasks />} />
+
+        </Routes>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
