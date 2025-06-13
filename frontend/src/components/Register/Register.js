@@ -13,7 +13,10 @@ export default function RegisterPage() {
   const handleRegister = async (e) => {
     e.preventDefault()
     try {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/register`
+      const url = `${process.env.REACT_APP_BACKEND_URL}/api/users/register`
+
+      console.log("url", url)
+      // const url = "http://localhost:5000/api/users/register"
       const response = await axios.post(url, { email, password }, {withCredentials: true})
 
       if(response.status === 201){

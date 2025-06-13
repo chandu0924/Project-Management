@@ -2,9 +2,9 @@ CREATE SCHEMA IF NOT EXISTS clone;
 
 CREATE TABLE clone.users (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(100) ,
   email VARCHAR(100) UNIQUE NOT NULL,
-  password TEXT NOT NULL, -- hashed
+  password TEXT NOT NULL,
   role VARCHAR(20) DEFAULT 'member',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
