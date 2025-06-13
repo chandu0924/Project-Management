@@ -1,6 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const userService = require("../services/userService");
+
+import userService from "../services/userService.js";
 
 // Register a new user
 router.post("/register", userService.registerUser);
@@ -20,4 +21,4 @@ router.put("/:id", userService.updateUser);
 // Delete user
 router.delete("/:id", userService.deleteUser);
 
-module.exports = router;
+export default router;

@@ -1,8 +1,9 @@
-const pool = require("../db");
-const userQueries = require("../queries/userQueries");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import userQueries from "../queries/userQueries.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import pool from "../db/connection.js";
 
+const JWT_SECRET = process.env.JWT_SECRET || "ssksdjgomg99nw3e";
 
 /*
 paylaod
@@ -14,14 +15,14 @@ paylaod
 */
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
     const existingUser = await pool.query(userQueries.getUserByEmail, [email]);
 
     if (existingUser.rows.length > 0)
       return res.status(400).json({ message: "Email already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await pool.query(userQueries.createUser, [name, email, hashedPassword]);
+    await pool.query(userQueries.createUser, [ email, hashedPassword]);
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
@@ -39,26 +40,33 @@ paylaod
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const result = await pool.query(userQueries.getUserByEmail, [email]);
 
-    if (result.rows.length === 0)
-      return res.status(401).json({ message: "Invalid credentials" });
+    const userResult = await pool.query(userQueries.getUserByEmail, [email]);
 
-    const user = result.rows[0];
-    const match = await bcrypt.compare(password, user.password);
+    if (userResult.rows.length === 0) {
+      return res.status(401).json({ message: "Invalid credentials! User not found" });
+    }
 
-    if (!match) return res.status(401).json({ message: "Invalid credentials" });
+    const user = userResult.rows[0];
 
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1d",
-    });
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials! Password does not match" });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     res.json({ token });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Login failed", error: err.message });
   }
 };
-
 /*
 get all users
 */
@@ -123,7 +131,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   registerUser,
   loginUser,
   getAllUsers,

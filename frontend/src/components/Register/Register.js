@@ -1,29 +1,28 @@
 import { useState } from "react"
 import axios from "axios"
-import { useCookies } from "react-cookie"
 import { useNavigate, Link } from "react-router-dom";
-// import styles from "./Register.css"
 import "./Register.css";
-
-// const cookies = new Cookies()
 
 export default function RegisterPage() {
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-  const [cookie, setCookie] = useCookies(["token"])
   const [success, setSuccess] = useState("")
 
   const handleRegister = async (e) => {
     e.preventDefault()
     try {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/register`
-      const response = await axios.post(url, { email, password })
-      const { token } = response.data
-      setCookie("token", token, { path: "/" })
-      setSuccess("Registration successful! You can now log in.")
-      setError("")
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/users/register`
+      const response = await axios.post(url, { email, password }, {withCredentials: true})
+
+      if(response.status === 201){
+        setSuccess("Registration successful! You can now log in.")
+        setError("")
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500)
+      }
     } catch (err) {
       console.error("Register error:", err)
       setError(err.response?.data?.message || "Registration failed")
@@ -66,7 +65,7 @@ export default function RegisterPage() {
 
       <p className="register-login-text">
         Already have an account?{" "}
-        <Link href="/login" className="register-login-link">Login here</Link>
+        <Link to="/login" className="register-login-link">Login here</Link>
       </p>
     </div>
   )

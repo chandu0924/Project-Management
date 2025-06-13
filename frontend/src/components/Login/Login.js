@@ -15,7 +15,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const url = `${process.env.REACT_APP_BACKEND_URL}/api/users/login`;
-      const response = await axios.post(url, { email, password });
+      const response = await axios.post(url, { email, password }, {withCredentials: true});
 
       const { token } = response.data;
       setCookie("token", token, { path: "/" });

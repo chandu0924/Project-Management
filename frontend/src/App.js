@@ -1,51 +1,27 @@
-// src/App.js
-import React from 'react';
-import "./App.css";
-import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar/Navbar';
-import Sidebar from './components/Sidebar/Sidebar';
-import Footer from './components/Footer/Footer';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import Main from "./Main.js";
 
-import Dashboard from './components/Dashboard/Dashboard';
-import Projects from './components/Project/Project';
-import Backlog from './components/Backlog/Backlog';
-import Sprints from './components/Sprint/SprintBoard';
-import Task from "./components/Task/Tasks";
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
-// import ProjectBacklog from './pages/project/ProjectBacklog';
-import Epic from './components/Epic/Epic';
-import UserStory from './components/UserStory/UserStory';
+export default function App() {
+  const [cookies] = useCookies(["token"]);
+  const token = cookies.token;
 
-function App() {
   return (
-    <div className="app">
-      <Navbar />
-      <Sidebar />
-      <div className="main-content" style={{ marginLeft: '200px', paddingTop: '60px', paddingBottom: '40px', padding: '20px' }}>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/backlog" element={<Backlog />} />
-          <Route path="/sprints" element={<Sprints />} />
-
-          <Route path="/projects/:projectId/backlog" element={<Backlog />} />
-          <Route path="/projects/:projectId/backlog/epic/:epicId" element={<Epic />} />
-          <Route
-            path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId"
-            element={<UserStory />}
-          />
-          <Route
-            path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId/task/:taskId"
-            element={<Task />}
-          />
-        </Routes>
-      </div>
-      <Footer />
-    </div>
+    <Routes>
+      <Route
+        path="/login"
+        element={!token ? <Login /> : <Navigate to="/" replace />}
+      />
+      <Route
+        path="/register"
+        element={!token ? <Register /> : <Navigate to="/" replace />}
+      />
+      <Route
+        path="/*"
+        element={token ? <Main /> : <Navigate to="/login" replace />}
+      />
+    </Routes>
   );
 }
-
-export default App;

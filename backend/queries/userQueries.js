@@ -1,7 +1,7 @@
-module.exports = {
+const userQueries = {
     createUser: `
-      INSERT INTO clone.users (name, email, password)
-      VALUES ($1, $2, $3)
+      INSERT INTO clone.users (email, password)
+      VALUES ($1, $2)
     `,
   
     getUserByEmail: `
@@ -25,3 +25,4 @@ module.exports = {
     `,
   };
   
+export default userQueries;
