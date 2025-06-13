@@ -10,6 +10,13 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
+.epic-header{
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
 .task-item {
   cursor: pointer;
   padding: 0.4rem;

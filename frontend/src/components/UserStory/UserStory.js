@@ -31,7 +31,7 @@ const UserStory = () => {
     }
   }, [epicId, storyId]);
 
-  if (!userStoryData) return <p>Loading...</p>;
+  if (!userStoryData) return <p>Loading... Content Not Found</p>;
 
   return (
     <div>

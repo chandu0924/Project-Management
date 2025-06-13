@@ -53,7 +53,10 @@ export default function Epic() {
 
   return (
     <div className="epic-details-container">
-      <h2>Epic: {epicData.title}</h2>
+      <div className="epic-header">
+        <h2>{epicData.title}</h2>
+        <button onClick={() => navigate(`/projects/${projectId}/backlog/epic/${epicId}/userstory/new`)}>Create User Story</button>
+      </div>
       {epicData.userStories.map((story) => (
         <div
           key={story.id}

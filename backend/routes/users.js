@@ -10,15 +10,15 @@ router.post("/register", userService.registerUser);
 router.post("/login", userService.loginUser);
 
 // Get all users
-router.get("/", userService.getAllUsers);
+router.get("/getAll", userService.getAllUsers);
 
 // Get user by ID
-router.get("/:id", userService.getUserById);
+router.get("/getById/:id", userService.getUserById);
 
 // Update user
-router.put("/:id", userService.updateUser);
+router.put("/update/:id", userService.updateUser);
 
 // Delete user
-router.delete("/:id", userService.deleteUser);
+router.delete("/delete/:id", userService.deleteUser);
 
 export default router;

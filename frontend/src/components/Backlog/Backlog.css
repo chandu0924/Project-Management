@@ -2,6 +2,13 @@
     padding: 20px;
   }
   
+  .backlog-header{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
   .epic-list {
     display: flex;
     flex-direction: column;

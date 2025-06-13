@@ -1,0 +1,23 @@
+.userstory-form {
+  max-width: 400px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff7f0;
+}
+.userstory-form input,
+.userstory-form textarea {
+  padding: 10px;
+  font-size: 16px;
+}
+.userstory-form button {
+  padding: 10px;
+  /* background-color: #ff6f00; */
+  color: white;
+  border: none;
+  cursor: pointer;
+}

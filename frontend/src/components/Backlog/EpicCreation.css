@@ -1,0 +1,24 @@
+.epic-form {
+  max-width: 400px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+.epic-form input,
+.epic-form textarea {
+  padding: 10px;
+  font-size: 16px;
+}
+.epic-form button {
+  padding: 10px;
+  /* background-color: #2d87f0; */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}

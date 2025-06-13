@@ -18,7 +18,10 @@ export default function Backlog() {
 
   return (
     <div className="backlog-container">
-      <h2>Epics</h2>
+      <div className="backlog-header">
+        <h2>Epics</h2>
+        <button onClick={() => navigate(`/projects/${projectId}/backlog/epic/new`)}>Create Epic</button>
+      </div>
       <div className="epic-list">
         {epics.map((epic) => (
           <div
