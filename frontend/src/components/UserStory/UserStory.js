@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import "./UserStory.css";
 
 const dummyData = {
   epic1: {
@@ -34,21 +35,21 @@ const UserStory = () => {
   if (!userStoryData) return <p>Loading... Content Not Found</p>;
 
   return (
-    <div>
-      <h2>User Story: {userStoryData.title}</h2>
+    <div className="user-story-container">
+      <h2 className="user-story-header">{userStoryData.title}</h2>
       <ul>
         {userStoryData.tasks.map((task) => (
-          <li
+          <div
             key={task.id}
+            className="task-card"
             onClick={() =>
               navigate(
                 `/projects/${projectId}/backlog/epic/${epicId}/userstory/${storyId}/task/${task.id}`
               )
             }
-            style={{ cursor: "pointer", color: "blue" }}
           >
-            {task.title}
-          </li>
+            <h4>{task.title} </h4>
+          </div>
         ))}
       </ul>
     </div>

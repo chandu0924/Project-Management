@@ -1,31 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./UserStoryCreation.css";
 
-export default function CreateUserStory() {
+export default function UserStoryCreation() {
+  const [epics, setEpics] = useState([]);
+  const [epicId, setEpicId] = useState("");
   const [title, setTitle] = useState("");
-  const [details, setDetails] = useState("");
+  const [description, setDescription] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/epics`)
+      .then((res) => setEpics(res.data))
+      .catch((err) => console.error("Error fetching epics", err));
+  }, []);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("User Story:", { title, details });
+    try {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user-stories`, {
+        epic_id: epicId,
+        title,
+        description
+      });
+      setMessage("User Story created successfully.");
+      setTitle("");
+      setDescription("");
+      setEpicId("");
+    } catch (err) {
+      setMessage("Error creating user story.");
+    }
   };
 
   return (
     <form className="userstory-form" onSubmit={handleSubmit}>
       <h2>Create User Story</h2>
-      <input
-        type="text"
-        placeholder="Story Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
-      <textarea
-        placeholder="Story Details"
-        value={details}
-        onChange={(e) => setDetails(e.target.value)}
-      ></textarea>
-      <button type="submit">Create Story</button>
+
+      <label>Epic:</label>
+      <select value={epicId} onChange={(e) => setEpicId(e.target.value)} required>
+        <option value="">Select Epic</option>
+        {epics.map((epic) => (
+          <option key={epic.id} value={epic.id}>{epic.title}</option>
+        ))}
+      </select>
+
+      <label>Title:</label>
+      <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+
+      <label>Description:</label>
+      <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+
+      <button type="submit">Create</button>
+      {message && <p className="msg">{message}</p>}
     </form>
   );
 }

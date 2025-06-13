@@ -1,24 +1,60 @@
-.epic-form {
-  max-width: 400px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 20px;
-  border: 1px solid #aaa;
-  border-radius: 8px;
-  background: #f9f9f9;
+.epic-form-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #1e1e2f;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  color: #f0f0f0;
+  font-family: Arial, sans-serif;
 }
-.epic-form input,
-.epic-form textarea {
-  padding: 10px;
-  font-size: 16px;
+
+.epic-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
-.epic-form button {
-  padding: 10px;
-  /* background-color: #2d87f0; */
-  color: white;
-  border: none;
-  cursor: pointer;
+
+.epic-form label {
+  display: block;
+  margin-top: 1rem;
   font-weight: bold;
+}
+
+.epic-form input,
+.epic-form select,
+.epic-form textarea {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.4rem;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  background: #2e2e3e;
+  color: #fff;
+}
+
+.epic-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.epic-form button {
+  margin-top: 1.5rem;
+  padding: 0.8rem;
+  width: 100%;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.epic-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  color: #00ff9f;
 }

@@ -9,6 +9,10 @@
     margin-bottom: 24px;
   }
 
+  .backlog-header button{
+    padding: 10px 20px;
+  }
+  
   .epic-list {
     display: flex;
     flex-direction: column;
@@ -24,7 +28,7 @@
     transition: background 0.2s;
   }
   
-  .epic-card:hover {
-    background: #e8e8e8;
-  }
-  
+.epic-card:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.01);
+}

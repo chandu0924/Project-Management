@@ -17,12 +17,11 @@
   margin-bottom: 24px;
 }
 
-.task-item {
-  cursor: pointer;
-  padding: 0.4rem;
-}
-
-.task-item:hover {
-  background-color: #e2e2e2;
-  border-radius: 4px;
+  .epic-header button{
+    padding: 10px 20px;
+  }
+  
+.story-card:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.01);
 }
