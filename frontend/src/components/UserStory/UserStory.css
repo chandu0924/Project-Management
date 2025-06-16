@@ -21,3 +21,14 @@
   background-color: #f0f0f0;
   transform: scale(1.01);
 }
+
+.user-story-header{
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+  .user-story-header button{
+    padding: 10px 20px;
+  }

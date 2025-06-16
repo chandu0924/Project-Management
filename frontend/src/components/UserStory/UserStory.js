@@ -36,7 +36,10 @@ const UserStory = () => {
 
   return (
     <div className="user-story-container">
-      <h2 className="user-story-header">{userStoryData.title}</h2>
+      <div className="user-story-header">
+        <h2 className="user-story-header">{userStoryData.title}</h2>
+        <button onClick={() => navigate(`/projects/${projectId}/backlog/epic/${epicId}/userstory/${storyId}/task/new`)}>Create Task</button>
+      </div>
       <ul>
         {userStoryData.tasks.map((task) => (
           <div

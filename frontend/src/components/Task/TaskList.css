@@ -1,0 +1,23 @@
+.task-list-container{
+  padding: 1rem;
+}
+
+.task-list-header{
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.task-card{
+  background-color: #f8f8f8;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.task-card:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.01);
+}

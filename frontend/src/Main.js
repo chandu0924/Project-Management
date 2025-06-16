@@ -10,12 +10,13 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Projects from './components/Project/Project';
 import Backlog from './components/Backlog/Backlog';
 import Sprints from './components/Sprint/SprintBoard';
-import Task from "./components/Task/Tasks";
+import TaskCreation from "./components/Task/TaskCreation";
 
 import Epic from './components/Epic/Epic';
 import UserStory from './components/UserStory/UserStory';
 import EpicCreation from './components/Backlog/EpicCreation';
 import UserStoryCreation from './components/Epic/UserStoryCreation';
+import TaskList from './components/Task/TaskList';
 
 function Main() {
   return (
@@ -29,6 +30,7 @@ function Main() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/backlog" element={<Backlog />} />
           <Route path="/sprints" element={<Sprints />} />
+          <Route path="/tasklist" element={<TaskList />} />
 
           <Route path="/projects/:projectId/backlog" element={<Backlog />} />
           <Route path="/projects/:projectId/backlog/epic/:epicId" element={<Epic />} />
@@ -43,7 +45,7 @@ function Main() {
           />
           <Route
             path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId/task/:taskId"
-            element={<Task />}
+            element={<TaskCreation />}
           />
         </Routes>
       </div>
