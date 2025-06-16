@@ -17,6 +17,7 @@ import UserStory from './components/UserStory/UserStory';
 import EpicCreation from './components/Backlog/EpicCreation';
 import UserStoryCreation from './components/Epic/UserStoryCreation';
 import TaskList from './components/Task/TaskList';
+import Task from './components/Task/Task';
 
 function Main() {
   return (
@@ -45,6 +46,10 @@ function Main() {
           />
           <Route
             path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId/task/:taskId"
+            element={<Task />}
+          />
+          <Route
+            path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId/task/new"
             element={<TaskCreation />}
           />
         </Routes>

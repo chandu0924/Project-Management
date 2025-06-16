@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import "./TaskList.css";
 
 const tasks = [
@@ -6,12 +7,18 @@ const tasks = [
     { id: 3, title: 'Task 3', description: 'Description 3', status: 'Completed', priority: 3 },
 ]
 
-const TaskList = ({  }) => {
+const TaskList = ({ projectId, epicId, storyId }) => {
+
+    const navigate = useNavigate();
+    
     return (
         <div className="task-list-container">
             <h2 className="task-list-header">Tasks</h2>
             {tasks.map((task) => (
-                <div key={task.id} className="task-card">
+                <div key={task.id} 
+                     className="task-card"
+                     onClick={() => navigate(`/projects/${projectId}/backlog/epic/${epicId}/userstory/${storyId}/task/${task.id}`)}
+                >
                     <h3>{task.title}</h3>
                     <p>{task.description}</p>
                     <p>Status: {task.status}</p>
