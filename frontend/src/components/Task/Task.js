@@ -52,7 +52,14 @@ export default function TaskDetail() {
 
   return (
     <div className="task-detail-container">
-      <h1 className="task-title">{task.title}</h1>
+
+      <div className="task-form-header">
+        <h1 className="task-title">{task.title}</h1>
+        <div 
+          onClick={() => window.history.back()}
+          className="close-button">&#10005;</div>
+      </div>
+
       <p className="task-description">{task.description || "No description provided."}</p>
 
       <div className="task-meta">

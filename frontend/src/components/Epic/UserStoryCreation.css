@@ -68,3 +68,9 @@
   text-align: center;
   color: #90ee90; /* light green for success message */
 }
+
+.userstory-form-header{
+    display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+}

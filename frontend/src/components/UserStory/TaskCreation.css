@@ -69,3 +69,13 @@
   text-align: center;
   color: #90ee90; /* Light green for success */
 }
+
+.close-button {
+  font-size: 30px;
+  cursor: pointer;
+}
+.task-form-header{
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+}

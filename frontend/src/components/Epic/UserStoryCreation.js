@@ -44,8 +44,13 @@ export default function UserStoryCreation() {
 
   return (
     <form className="userstory-form" onSubmit={handleSubmit}>
-      <h2>Create User Story</h2>
-
+      <div className="userstory-form-header">
+        <h2>Create User Story</h2>
+        <div 
+          className="close-button"
+          onClick={() => navigate(`/backlog/epic/${epicId}`)}
+        >&#10005;</div>
+      </div>
       {/* <label>Epic:</label>
       <select value={epicId} 
       onChange={(e) => setEpicId(parseInt(e.target.value))} 

@@ -50,7 +50,14 @@ export default function EpicCreation() {
 
   return (
     <div className="epic-form-container">
-      <h2>Create Epic</h2>
+
+      <div className="epic-form-header">
+        <h2>Create Epic</h2>
+        <div 
+          className="close-button"
+          onClick={() => navigate(`/backlog`)}
+        >&#10005;</div>
+      </div>
       <form className="epic-form" onSubmit={handleSubmit}>
         <label>Project</label>
         <select value={projectId} onChange={(e) => setProjectId(e.target.value)} disabled>

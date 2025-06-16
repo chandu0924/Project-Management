@@ -58,3 +58,8 @@
   font-weight: bold;
   color: #00ff9f;
 }
+.epic-form-header{
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+}

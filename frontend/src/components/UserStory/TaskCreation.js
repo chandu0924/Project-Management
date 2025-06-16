@@ -55,7 +55,12 @@ export default function CreateTaskForm() {
 
   return (
     <form className="task-form" onSubmit={handleSubmit}>
-      <h2>Create Task</h2>
+      <div className="task-form-header">
+        <h2>Create Task</h2>
+        <div 
+          onClick={() => navigate(`/backlog/epic/${epicId}/userstory/${storyId}`)} 
+          className="close-button">&#10005;</div>
+      </div>
 
       <label>User Story:</label>
       {/* <select value={userStoryId} onChange={(e) => setuserStoryId(parseInt(e.target.value))} required>
