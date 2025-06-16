@@ -9,7 +9,7 @@ const userQueries = {
     `,
   
     getAllUsers: `
-      SELECT id, name, email FROM clone.users
+      SELECT id,email,role FROM clone.users;
     `,
   
     getUserById: `

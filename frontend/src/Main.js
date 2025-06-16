@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Projects from './components/Project/Project';
 import Backlog from './components/Backlog/Backlog';
 import Sprints from './components/Sprint/SprintBoard';
-import TaskCreation from "./components/Task/TaskCreation";
+import TaskCreation from "./components/UserStory/TaskCreation";
 
 import Epic from './components/Epic/Epic';
 import UserStory from './components/UserStory/UserStory';
@@ -33,23 +33,23 @@ function Main() {
           <Route path="/sprints" element={<Sprints />} />
           <Route path="/tasklist" element={<TaskList />} />
 
-          <Route path="/projects/:projectId/backlog" element={<Backlog />} />
-          <Route path="/projects/:projectId/backlog/epic/:epicId" element={<Epic />} />
-          <Route path="/projects/:projectId/backlog/epic/new" element={<EpicCreation />} />
+          <Route path="/backlog" element={<Backlog />} />
+          <Route path="/backlog/epic/:epicId" element={<Epic />} />
+          <Route path="/backlog/epic/new" element={<EpicCreation />} />
           <Route
-            path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId"
+            path="/backlog/epic/:epicId/userstory/:storyId"
             element={<UserStory />}
           />
           <Route 
-            path="/projects/:projectId/backlog/epic/:epicId/userstory/new"
+            path="/backlog/epic/:epicId/userstory/new"
             element={<UserStoryCreation />}
           />
           <Route
-            path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId/task/:taskId"
+            path="/backlog/epic/:epicId/userstory/:storyId/task/:taskId"
             element={<Task />}
           />
           <Route
-            path="/projects/:projectId/backlog/epic/:epicId/userstory/:storyId/task/new"
+            path="/backlog/epic/:epicId/userstory/:storyId/task/new"
             element={<TaskCreation />}
           />
         </Routes>

@@ -4,13 +4,13 @@ import "./UserStoryCreation.css";
 
 export default function UserStoryCreation() {
   const [epics, setEpics] = useState([]);
-  const [epicId, setEpicId] = useState("");
+  const [epicId, setEpicId] = useState(0);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/epics`)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/epics/getAll`)
       .then((res) => setEpics(res.data))
       .catch((err) => console.error("Error fetching epics", err));
   }, []);
@@ -18,10 +18,10 @@ export default function UserStoryCreation() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user-stories`, {
-        epic_id: epicId,
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/userstories/create`, {
         title,
-        description
+        description,
+        epicId,
       });
       setMessage("User Story created successfully.");
       setTitle("");
@@ -37,7 +37,7 @@ export default function UserStoryCreation() {
       <h2>Create User Story</h2>
 
       <label>Epic:</label>
-      <select value={epicId} onChange={(e) => setEpicId(e.target.value)} required>
+      <select value={epicId} onChange={(e) => setEpicId(parseInt(e.target.value))} required>
         <option value="">Select Epic</option>
         {epics.map((epic) => (
           <option key={epic.id} value={epic.id}>{epic.title}</option>

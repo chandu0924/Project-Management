@@ -22,8 +22,8 @@ const getEpicById = async (req, res) => {
 
 const createEpic = async (req, res) => {
     try {
-        const { name, description } = req.body;
-        await pool.query(epicQueries.createEpic, [name, description]);
+        const { title, description } = req.body;
+        await pool.query(epicQueries.createEpic, [title, description]);
         res.status(201).json({ message: "Epic created successfully" });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });

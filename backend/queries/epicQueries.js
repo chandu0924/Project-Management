@@ -2,7 +2,7 @@ const epicQueries = {
     getAllEpics: "SELECT * FROM clone.epics",
     getEpicById: "SELECT * FROM clone.epics WHERE id = $1",
     createEpic: `
-      INSERT INTO clone.epics (name, description)
+      INSERT INTO clone.epics (title , description)
       VALUES ($1, $2)
       RETURNING *
     `,

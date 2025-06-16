@@ -6,8 +6,8 @@ import userStoryService from "../services/userStoryService.js";
 // Get all user stories
 router.get("/getAll", userStoryService.getAllUserStories);
 
-// Get user story by ID
-router.get("/getById/:id", userStoryService.getUserStoryById);
+// Get user story by epic ID
+router.get("/getByEpicId/:id", userStoryService.getUserStoryByEpicId);
 
 // Create a new user story
 router.post("/create", userStoryService.createUserStory);    

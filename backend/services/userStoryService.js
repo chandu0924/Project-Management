@@ -10,10 +10,10 @@ const getAllUserStories = async (req, res) => {
     }
 };
 
-const getUserStoryById = async (req, res) => {
+const getUserStoryByEpicId = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query(userStoryQueries.getUserStoryById, [id]);
+        const result = await pool.query(userStoryQueries.getUserStoryByEpicId, [id]);
         res.json(result.rows);
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });
@@ -22,8 +22,8 @@ const getUserStoryById = async (req, res) => {
 
 const createUserStory = async (req, res) => {
     try {
-        const { name, description } = req.body;
-        await pool.query(userStoryQueries.createUserStory, [name, description]);
+        const { epicId, title, description } = req.body;
+        await pool.query(userStoryQueries.createUserStory, [title, description, epicId]);
         res.status(201).json({ message: "User story created successfully" });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });
@@ -53,7 +53,7 @@ const deleteUserStory = async (req, res) => {
 
 export default {
     getAllUserStories,
-    getUserStoryById,
+    getUserStoryByEpicId,
     createUserStory,
     updateUserStory,
     deleteUserStory

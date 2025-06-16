@@ -23,17 +23,22 @@ export default function EpicCreation() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const payload = { title, description, project_id: projectId };
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/epics`, payload);
+    const payload = { title, description };
+    
+    console.log(`${process.env.REACT_APP_BACKEND_URL}/api/epics/create`);
+
+    await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/epics/create`, payload)
+    .then((res) => {
       setMessage("Epic created successfully!");
       setTitle("");
       setDescription("");
       setProjectId("");
-    } catch (err) {
+      console.log("Epic created:", res.data);
+    })
+    .catch((err) => {
       console.error("Epic creation failed:", err);
       setMessage("Error creating epic.");
-    }
+    })
   };
 
   return (
@@ -41,7 +46,7 @@ export default function EpicCreation() {
       <h2>Create Epic</h2>
       <form className="epic-form" onSubmit={handleSubmit}>
         <label>Project</label>
-        <select value={projectId} onChange={(e) => setProjectId(e.target.value)} required>
+        <select value={projectId} onChange={(e) => setProjectId(e.target.value)} disabled>
           <option value="">-- Select Project --</option>
           {projects.map((proj) => (
             <option key={proj.id} value={proj.id}>

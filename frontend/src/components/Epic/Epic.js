@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import "./Epic.css";
 
 const dummyBacklog = {
@@ -41,28 +42,35 @@ const dummyBacklog = {
 };
 
 export default function Epic() {
-  const { projectId, epicId } = useParams();
+  const { epicId } = useParams();
   const navigate = useNavigate();
-  const [epicData, setEpicData] = useState(null);
+  const [epicData, setEpicData] = useState([]);
 
   useEffect(() => {
-    setEpicData(dummyBacklog[epicId]);
+    const fetchUserStoryData = async () => {
+      try {
+        console.log("epicId", epicId)
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/userstories/getByEpicId/${epicId}`);
+        setEpicData(res.data);
+      } catch (err) {
+        console.error("Failed to fetch user story data", err);
+      }
+    }
+    fetchUserStoryData();
   }, [epicId]);
-
-  if (!epicData) return <p>Epic not found or loading...</p>;
 
   return (
     <div className="epic-details-container">
       <div className="epic-header">
-        <h2>{epicData.title}</h2>
-        <button onClick={() => navigate(`/projects/${projectId}/backlog/epic/${epicId}/userstory/new`)}>Create User Story</button>
+        <h2> User Stories</h2>
+        <button onClick={() => navigate(`/backlog/epic/${epicId}/userstory/new`)}>Create User Story</button>
       </div>
-      {epicData.userStories.map((story) => (
+      {epicData && epicData.map((story) => (
         <div
           key={story.id}
           className="story-card"
           onClick={() =>
-            navigate(`/projects/${projectId}/backlog/epic/${epicId}/userstory/${story.id}`)
+            navigate(`/backlog/epic/${epicId}/userstory/${story.id}`)
           }
         >
           <h4>User Story: {story.title}</h4>

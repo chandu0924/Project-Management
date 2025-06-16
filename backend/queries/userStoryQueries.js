@@ -1,9 +1,9 @@
 const userStoryQueries = {
     getAllUserStories: "SELECT * FROM clone.user_stories",
-    getUserStoryById: "SELECT * FROM clone.user_stories WHERE id = $1",
+    getUserStoryByEpicId: "SELECT * FROM clone.user_stories WHERE epic_id = $1",
     createUserStory: `
-      INSERT INTO clone.user_stories (name, description)
-      VALUES ($1, $2)
+      INSERT INTO clone.user_stories (title, description, epic_id)
+      VALUES ($1, $2, $3)
       RETURNING *
     `,    
     updateUserStory: `
