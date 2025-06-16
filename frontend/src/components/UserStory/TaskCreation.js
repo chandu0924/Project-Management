@@ -1,21 +1,25 @@
-// const { projectId, epicId, storyId, taskId } = useParams();
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./TaskCreation.css";
 
 export default function CreateTaskForm() {
-  const [stories, setStories] = useState([]);
   const [users, setUsers] = useState([]);
-  const [storyId, setStoryId] = useState("");
   const [userId, setUserId] = useState("");
   const [title, setTitle] = useState("");
+  const [userStoryData, setUserStoryData] = useState(null);
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState(1);
   const [message, setMessage] = useState("");
 
+  const navigate = useNavigate();
+
+  const { epicId, storyId } = useParams();
+
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/userstories/getAll`)
-      .then((res) => setStories(res.data))
+    const newStoryId = parseInt(storyId);
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/userstories/getById/${newStoryId}`)
+      .then((res) => {setUserStoryData(res.data); console.log("thisis ",res.data);})
       .catch((err) => console.error("Error fetching user stories", err));
 
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/users/getAll`)
@@ -27,7 +31,7 @@ export default function CreateTaskForm() {
     e.preventDefault();
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/tasks/create`, {
-        storyId,
+        storyId: parseInt(storyId),
         title,
         description,
         status : "ToDo",
@@ -37,9 +41,13 @@ export default function CreateTaskForm() {
       setMessage("Task created successfully.");
       setTitle("");
       setDescription("");
-      setStoryId("");
+      // setuserStoryId("");
       setUserId("");
       setPriority(1);
+
+      setTimeout(() => {
+        navigate(`/backlog/epic/${epicId}/userstory/${storyId}`);
+      }, 1000);
     } catch (err) {
       setMessage("Error creating task.");
     }
@@ -50,12 +58,17 @@ export default function CreateTaskForm() {
       <h2>Create Task</h2>
 
       <label>User Story:</label>
-      <select value={storyId} onChange={(e) => setStoryId(parseInt(e.target.value))} required>
+      {/* <select value={userStoryId} onChange={(e) => setuserStoryId(parseInt(e.target.value))} required>
         <option value="">Select User Story</option>
         {stories.map((story) => (
           <option key={story.id} value={story.id}>{story.title}</option>
         ))}
-      </select>
+      </select> */}
+      <select value={storyId} disabled required>
+        <option value={storyId}>
+          {userStoryData ? userStoryData[0].title : "Loading..."}
+        </option>
+      </select> 
 
       <label>Assign to User:</label>
       <select value={userId} onChange={(e) => setUserId(e.target.value)}>

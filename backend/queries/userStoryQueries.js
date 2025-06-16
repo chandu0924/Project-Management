@@ -13,6 +13,7 @@ const userStoryQueries = {
       RETURNING *
     `,
     deleteUserStory: "DELETE FROM clone.user_stories WHERE id = $1",
+    getUserStoryById: "SELECT * FROM clone.user_stories WHERE id = $1"
 }
 
 export default userStoryQueries

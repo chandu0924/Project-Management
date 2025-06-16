@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./EpicCreation.css";
+import { useNavigate } from "react-router-dom";
 
 export default function EpicCreation() {
   const [projects, setProjects] = useState([]);
@@ -8,6 +9,8 @@ export default function EpicCreation() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -33,6 +36,10 @@ export default function EpicCreation() {
       setTitle("");
       setDescription("");
       setProjectId("");
+
+      setTimeout(() => {
+        navigate(`/backlog`);
+      }, 1000);
       console.log("Epic created:", res.data);
     })
     .catch((err) => {

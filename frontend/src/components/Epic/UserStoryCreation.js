@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./UserStoryCreation.css";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function UserStoryCreation() {
-  const [epics, setEpics] = useState([]);
-  const [epicId, setEpicId] = useState(0);
+  const [epicData, setEpicData] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
 
+  const navigate = useNavigate();
+
+  const { epicId } = useParams();
+
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/epics/getAll`)
-      .then((res) => setEpics(res.data))
+    const newEpicId = parseInt(epicId);
+    console.log("newEpicId", newEpicId)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/epics/getById/${newEpicId}`)
+      .then((res) => setEpicData(res.data))
       .catch((err) => console.error("Error fetching epics", err));
-  }, []);
+  }, [epicId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,12 +27,16 @@ export default function UserStoryCreation() {
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/userstories/create`, {
         title,
         description,
-        epicId,
+        epicId: parseInt(epicId),
       });
       setMessage("User Story created successfully.");
       setTitle("");
       setDescription("");
-      setEpicId("");
+      // setEpicId("");
+
+      setTimeout(() => {
+        navigate(`/backlog/epic/${epicId}`);
+      }, 1000);
     } catch (err) {
       setMessage("Error creating user story.");
     }
@@ -36,12 +46,20 @@ export default function UserStoryCreation() {
     <form className="userstory-form" onSubmit={handleSubmit}>
       <h2>Create User Story</h2>
 
-      <label>Epic:</label>
-      <select value={epicId} onChange={(e) => setEpicId(parseInt(e.target.value))} required>
-        <option value="">Select Epic</option>
+      {/* <label>Epic:</label>
+      <select value={epicId} 
+      onChange={(e) => setEpicId(parseInt(e.target.value))} 
+       required >
+        <option value={epicId}>Select Epic</option>
         {epics.map((epic) => (
           <option key={epic.id} value={epic.id}>{epic.title}</option>
         ))}
+      </select> */}
+      <label>Epic:</label>
+      <select value={epicId} disabled required>
+        <option value={epicId}>
+          {epicData ? epicData[0].title : "Loading..."}
+        </option>
       </select>
 
       <label>Title:</label>

@@ -51,10 +51,21 @@ const deleteUserStory = async (req, res) => {
     }
 };  
 
+const getUserStoryById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query(userStoryQueries.getUserStoryById, [id]);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ message: "Server error", error: err.message });
+    }
+};
+
 export default {
     getAllUserStories,
     getUserStoryByEpicId,
     createUserStory,
+    getUserStoryById,
     updateUserStory,
     deleteUserStory
 };
