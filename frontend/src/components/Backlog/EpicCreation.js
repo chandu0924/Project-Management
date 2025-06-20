@@ -162,7 +162,7 @@ export default function UnifiedTaskCreation() {
           disabled={!projectId}
           required
         >
-          {/* <option value="">Select Epic</option> */}
+          <option value="">Select Epic</option>
           {epics.map((epic) => (
             <option key={epic.id} value={epic.id}>{epic.title}</option>
           ))}
@@ -191,7 +191,7 @@ export default function UnifiedTaskCreation() {
           disabled={!selectedEpic}
           required
         >
-          {/* <option value="">Select Story</option> */}
+          <option value="">Select Story</option>
           {stories.map((story) => (
             <option key={story.id} value={story.id}>{story.title}</option>
           ))}

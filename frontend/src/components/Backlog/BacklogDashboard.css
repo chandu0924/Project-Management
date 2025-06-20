@@ -100,3 +100,19 @@
   background: #bbdefb;
 }
 
+.action-icons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.action-icons svg {
+  cursor: pointer;
+  color: #333;
+  transition: color 0.2s ease;
+}
+
+.action-icons svg:hover {
+  color: #007bff;
+}
+

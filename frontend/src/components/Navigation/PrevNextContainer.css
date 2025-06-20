@@ -1,5 +1,6 @@
 .prev-next-container{
   width: 80px;
+  margin-left: 1rem;
   /* position: absolute;
   left: 210px; */
   display: grid;
