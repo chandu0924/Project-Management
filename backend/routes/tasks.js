@@ -15,6 +15,8 @@ router.post("/create", taskService.createTask);
 // Get tasks by user story ID
 router.get("/getByStoryId/:id", taskService.getTaskByStoryId);
 
+router.get("/getByProjectId/:id", taskService.getTaskByProjectId);
+
 // Update task
 router.put("/update/:id", taskService.updateTask);
 

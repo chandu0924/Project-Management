@@ -71,11 +71,22 @@ const deleteTask = async (req, res) => {
     }
 };
 
+const getTaskByProjectId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query(taskQueries.getTaskByProjectId, [id]);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ message: "Server error", error: err.message });
+    }
+};
+
 export default {
     getAllTasks,
     getTaskById,
     createTask,
     updateTask,
     getTaskByStoryId,
+    getTaskByProjectId,
     deleteTask,
 };

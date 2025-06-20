@@ -21,7 +21,7 @@ const TaskList = () => {
                 if(storyId){
                     res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tasks/getByStoryId/${storyId}`);
                 }else{
-                    res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tasks/getAll`);
+                    res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tasks/getByProjectId/${projectId}`);
                 }
                 setTasks(res.data);
             } catch (err) {
