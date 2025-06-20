@@ -21,7 +21,7 @@ const dummyData = {
 };
 
 const UserStory = () => {
-  const { epicId,storyId } = useParams();
+  const { epicId,storyId, projectId } = useParams();
   const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
 
@@ -45,7 +45,7 @@ const UserStory = () => {
     <div className="user-story-container">
       <div className="user-story-header">
         <h2 className="user-story-header">Tasks</h2>
-        <button onClick={() => navigate(`/backlog/epic/${epicId}/userstory/${storyId}/task/new`)}>Create Task</button>
+        <button onClick={() => navigate(`/projects/${projectId}/epic/${epicId}/userstory/${storyId}/task/new`)}>Create Task</button>
       </div>
       <ul>
         {tasks && tasks.map((task) => (
@@ -54,7 +54,7 @@ const UserStory = () => {
             className="task-card"
             onClick={() =>
               navigate(
-                `/backlog/epic/${epicId}/userstory/${storyId}/task/${task.id}`
+                `/projects/${projectId}/epic/${epicId}/userstory/${storyId}/task/${task.id}`
               )
             }
           >

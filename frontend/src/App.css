@@ -3,3 +3,20 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.mainjs-container{
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 200px 1fr;
+}
+
+.main-content{
+  /* width: calc(100% - 200px);
+  position: absolute;
+  right: 0; */
+}
+
+.main-content-container{
+  display: grid;
+  grid-template-rows: 24px auto;
+}

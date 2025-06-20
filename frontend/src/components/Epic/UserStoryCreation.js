@@ -11,7 +11,7 @@ export default function UserStoryCreation() {
 
   const navigate = useNavigate();
 
-  const { epicId } = useParams();
+  const { epicId, projectId } = useParams();
 
   useEffect(() => {
     const newEpicId = parseInt(epicId);
@@ -35,7 +35,7 @@ export default function UserStoryCreation() {
       // setEpicId("");
 
       setTimeout(() => {
-        navigate(`/backlog/epic/${epicId}`);
+        navigate(`/projects/${projectId}/epic/${epicId}`);
       }, 1000);
     } catch (err) {
       setMessage("Error creating user story.");
@@ -48,7 +48,7 @@ export default function UserStoryCreation() {
         <h2>Create User Story</h2>
         <div 
           className="close-button"
-          onClick={() => navigate(`/backlog/epic/${epicId}`)}
+          onClick={() => navigate(`/projects/${projectId}/epic/${epicId}`)}
         >&#10005;</div>
       </div>
       {/* <label>Epic:</label>

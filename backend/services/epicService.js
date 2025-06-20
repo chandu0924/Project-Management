@@ -22,9 +22,9 @@ const getEpicById = async (req, res) => {
 
 const createEpic = async (req, res) => {
     try {
-        const { title, description } = req.body;
-        await pool.query(epicQueries.createEpic, [title, description]);
-        res.status(201).json({ message: "Epic created successfully" });
+        const { title, description, projectId } = req.body;
+        const result = await pool.query(epicQueries.createEpic, [title, description, projectId]);
+        res.status(201).json(result.rows[0]);
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });
     }
@@ -51,10 +51,22 @@ const deleteEpic = async (req, res) => {
     }
 };
 
+const getEpicByProjectId = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query(epicQueries.getEpicByProjectId, [id]);
+        // console.log(result.rows)
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ message: "Server error", error: err.message });
+    }
+};
+
 export default {
     getAllEpics,
     getEpicById,
     createEpic,
+    getEpicByProjectId,
     updateEpic,
     deleteEpic,
 };

@@ -1,0 +1,102 @@
+.backlog-dashboard-wrapper {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+/* .backlog-dashboard-header{
+  margin-bottom: 30px;
+} */
+
+.epic-card-wrapper {
+  background: #f4f4f4;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.epic-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.epic-card-header h3 {
+  margin: 0;
+}
+
+.epic-card-header button {
+  padding: 6px 14px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+  
+  .backlog-header{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+.story-card-wrapper {
+  background-color: #ffffff;
+  padding: 1rem;
+  margin: 1rem 0 1rem 1.5rem;
+  border-left: 4px solid #aaa;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.story-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.story-card-header h4 {
+  margin: 0;
+}
+
+.story-card-header button {
+  padding: 5px 12px;
+  background-color: #00a152;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.task-card-box button{
+  padding: 5px 12px;
+  background-color: #848b1b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer
+}
+
+.task-card-list {
+  margin-top: 1rem;
+  margin-left: 1.5rem;
+}
+
+.task-card-box {
+  background: #e3f2fd;
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin-bottom: 0.6rem;
+  transition: background 0.2s ease;
+  cursor: pointer;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+}
+
+.task-card-box:hover {
+  background: #bbdefb;
+}
+

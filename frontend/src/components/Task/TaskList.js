@@ -10,7 +10,7 @@ import axios from "axios";
 // ]
 
 const TaskList = () => {
-    const { epicId,storyId } = useParams();
+    const { epicId,storyId, projectId } = useParams();
     const navigate = useNavigate();
     const [tasks, setTasks] = useState([]);
 
@@ -37,7 +37,7 @@ const TaskList = () => {
             {tasks.map((task) => (
                 <div key={task.id} 
                      className="task-card"
-                     onClick={() => navigate(`/backlog/epic/${epicId}/userstory/${storyId}/task/${task.id}`)}
+                     onClick={() => navigate(`/projects/${projectId}/epic/${epicId}/userstory/${storyId}/task/${task.id}`)}
                 >
                     <h3>{task.title}</h3>
                     <p>{task.description}</p>

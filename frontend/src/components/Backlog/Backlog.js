@@ -29,14 +29,14 @@ export default function Backlog() {
     <div className="backlog-container">
       <div className="backlog-header">
         <h2>Epics</h2>
-        <button onClick={() => navigate(`/backlog/epic/new`)}>Create Epic</button>
+        <button onClick={() => navigate(`/project/${projectId}/epic/new`)}>Create Epic</button>
       </div>
       <div className="epic-list">
         {epics.map((epic) => (
           <div
             key={epic.id}
             className="epic-card"
-            onClick={() => navigate(`/backlog/epic/${epic.id}`)}
+            onClick={() => navigate(`/project/${projectId}/epic/${epic.id}`)}
           >
             <h3>{epic.title}</h3>
           </div>

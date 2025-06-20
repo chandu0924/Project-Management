@@ -14,7 +14,7 @@ export default function CreateTaskForm() {
 
   const navigate = useNavigate();
 
-  const { epicId, storyId } = useParams();
+  const { epicId, storyId, projectId } = useParams();
 
   useEffect(() => {
     const newStoryId = parseInt(storyId);
@@ -46,7 +46,7 @@ export default function CreateTaskForm() {
       setPriority(1);
 
       setTimeout(() => {
-        navigate(`/backlog/epic/${epicId}/userstory/${storyId}`);
+        navigate(`/projects/${projectId}/epic/${epicId}/userstory/${storyId}`);
       }, 1000);
     } catch (err) {
       setMessage("Error creating task.");
@@ -58,7 +58,7 @@ export default function CreateTaskForm() {
       <div className="task-form-header">
         <h2>Create Task</h2>
         <div 
-          onClick={() => navigate(`/backlog/epic/${epicId}/userstory/${storyId}`)} 
+          onClick={() => navigate(`/projects/${projectId}/epic/${epicId}/userstory/${storyId}`)} 
           className="close-button">&#10005;</div>
       </div>
 

@@ -55,8 +55,3 @@ CREATE TABLE clone.sprints (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- CREATE TABLE clone.sprint_tasks (
---   sprint_id INTEGER REFERENCES clone.sprints(id) ON DELETE CASCADE,
---   task_id INTEGER REFERENCES clone.tasks(id) ON DELETE CASCADE,
---   PRIMARY KEY (sprint_id, task_id)
--- );

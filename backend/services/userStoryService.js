@@ -23,12 +23,25 @@ const getUserStoryByEpicId = async (req, res) => {
 const createUserStory = async (req, res) => {
     try {
         const { epicId, title, description } = req.body;
-        await pool.query(userStoryQueries.createUserStory, [title, description, epicId]);
-        res.status(201).json({ message: "User story created successfully" });
+        const result = await pool.query(userStoryQueries.createUserStory, [title, description, epicId]);
+        res.status(201).json(result.rows[0]);
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });
     }
 };
+
+/*
+Updates an existing user story by its ID.
+
+Request parameters:
+- req.params.id: The ID of the user story to update.
+- req.body.name: The new name of the user story.
+- req.body.description: The new description of the user story.
+
+Responses:
+- 200: A JSON object confirming successful update.
+- 500: A JSON object with an error message if a server error occurs.
+*/
 
 const updateUserStory = async (req, res) => {
     try {

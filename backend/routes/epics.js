@@ -9,6 +9,8 @@ router.get("/getAll", epicService.getAllEpics);
 // Get epic by ID
 router.get("/getById/:id", epicService.getEpicById);
 
+router.get("/getByProjectId/:id", epicService.getEpicByProjectId);
+
 // Create a new epic
 router.post("/create", epicService.createEpic);
 

@@ -18,41 +18,51 @@ import EpicCreation from './components/Backlog/EpicCreation';
 import UserStoryCreation from './components/Epic/UserStoryCreation';
 import TaskList from './components/Task/TaskList';
 import Task from './components/Task/Task';
+import BacklogDashboard from './components/Backlog/BacklogDashboard';
+import PrevNextContainer from './components/Navigation/PrevNextContainer';
 
 function Main() {
   return (
     <div className="main">
       <Navbar />
-      <Sidebar />
-      <div className="main-content" style={{ marginLeft: '200px', paddingTop: '60px', paddingBottom: '40px', padding: '20px' }}>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
+      <div className='mainjs-container'>
+        <Sidebar />
+        <div className="main-content-container">
+          <PrevNextContainer />
+          <div className="main-content" >
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
 
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/backlog" element={<Backlog />} />
-          <Route path="/sprints" element={<Sprints />} />
-          <Route path="/tasklist" element={<TaskList />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/backlog" element={<Backlog />} />
+              <Route path="/sprints" element={<Sprints />} />
+              <Route path="/projects/:projectId/tasks" element={<TaskList />} />
 
-          <Route path="/backlog" element={<Backlog />} />
-          <Route path="/backlog/epic/:epicId" element={<Epic />} />
-          <Route path="/backlog/epic/new" element={<EpicCreation />} />
-          <Route
-            path="/backlog/epic/:epicId/userstory/:storyId"
-            element={<UserStory />}
-          />
-          <Route 
-            path="/backlog/epic/:epicId/userstory/new"
-            element={<UserStoryCreation />}
-          />
-          <Route
-            path="/backlog/epic/:epicId/userstory/:storyId/task/:taskId"
-            element={<Task />}
-          />
-          <Route
-            path="/backlog/epic/:epicId/userstory/:storyId/task/new"
-            element={<TaskCreation />}
-          />
-        </Routes>
+              <Route path="/backlog" element={<Backlog />} />
+              <Route path="/projects/:projectId/epic/:epicId" element={<Epic />} />
+              <Route path="/projects/:projectId/epic/new" element={<EpicCreation />} />
+              
+              <Route path="/projects/:projectId" element={<BacklogDashboard />} />
+              
+              <Route
+                path="/projects/:projectId/epic/:epicId/userstory/:storyId"
+                element={<UserStory />}
+              />
+              <Route 
+                path="/projects/:projectId/epic/:epicId/userstory/new"
+                element={<UserStoryCreation />}
+              />
+              <Route
+                path="/projects/:projectId/epic/:epicId/userstory/:storyId/task/:taskId"
+                element={<Task />}
+              />
+              <Route
+                path="/projects/:projectId/epic/:epicId/userstory/:storyId/task/new"
+                element={<TaskCreation />}
+              />
+            </Routes>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>

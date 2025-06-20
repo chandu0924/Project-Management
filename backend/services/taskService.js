@@ -22,7 +22,7 @@ const getTaskById = async (req, res) => {
 
 const createTask = async (req, res) => {
     try {
-        const { storyId, status, priority, assigned_to, title, description } = req.body;
+        const { storyId, status, priority, assigned_to, title, description, projectId, epicId } = req.body;
         await pool.query(taskQueries.createTask, 
         [        
             storyId,
@@ -30,7 +30,9 @@ const createTask = async (req, res) => {
             description,
             status,
             priority,
-            assigned_to
+            assigned_to,
+            projectId,
+            epicId
         ]);
         res.status(201).json({ message: "Task created successfully" });
     } catch (err) {
