@@ -44,7 +44,7 @@ const UserStory = () => {
   return (
     <div className="user-story-container">
       <div className="user-story-header">
-        <h2 className="user-story-header">Tasks</h2>
+        <h2>Tasks</h2>
         <button onClick={() => navigate(`/projects/${projectId}/epic/${epicId}/userstory/${storyId}/task/new`)}>Create Task</button>
       </div>
       <ul>
