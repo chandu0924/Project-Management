@@ -4,6 +4,7 @@ CREATE TABLE clone.users (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100) ,
   email VARCHAR(100) UNIQUE NOT NULL,
+  name VARCHAR(30),
   password TEXT NOT NULL,
   role VARCHAR(20) DEFAULT 'member',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
