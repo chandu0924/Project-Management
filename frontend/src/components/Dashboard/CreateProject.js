@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import './CreateProject.css';
+import { ProjectContext } from '../../context/ProjectContext';
 
 const CreateProject = ({ onClose }) => {
   const [projectName, setProjectName] = useState('');
   const [projectDesc, setProjectDesc] = useState('');
+  const projectContext = useContext(ProjectContext);
 
   const handleSubmit = async () => {
     if (!projectName || !projectDesc) {
@@ -17,7 +19,9 @@ const CreateProject = ({ onClose }) => {
         name: projectName,
         description: projectDesc,
       });
-      alert('Project created successfully!');
+
+      projectContext.fetchProjects();
+      // alert('Project created successfully!');
       onClose();
     } catch (error) {
       console.error('Error creating project:', error);

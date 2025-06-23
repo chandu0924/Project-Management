@@ -3,7 +3,13 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "./BacklogDashboard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faEdit,
+  faTrash,
+  faChevronRight,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 import Popup from "../Popup/Popup";
 
 export default function BacklogDashboard() {
@@ -159,7 +165,19 @@ export default function BacklogDashboard() {
       {epics.map((epic) => (
         <div key={epic.id} className="epic-card-wrapper">
           <div className="epic-card-header" onClick={() => toggleEpic(epic.id)}>
-            <h3>Epic: {epic.title}</h3>
+            <div
+              className="epic-title"
+              style={epic.stories.length === 0 ? { marginLeft: "30px" } : {}}
+            >
+              {epic.stories.length > 0 && (
+                <FontAwesomeIcon
+                  icon={
+                    expandedEpicId === epic.id ? faChevronDown : faChevronRight
+                  }
+                />
+              )}
+              <h3>Epic: {epic.title}</h3>
+            </div>
             {/* <button onClick={() => navigate(`/projects/${projectId}/epic/${epic.id}`)}>View Epic</button> */}
             <div className="action-icons">
               <FontAwesomeIcon
@@ -167,26 +185,24 @@ export default function BacklogDashboard() {
                 title="View"
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`/projects/${projectId}/epic/${epic.id}`)
-                  }
-                }
+                  navigate(`/projects/${projectId}/epic/${epic.id}`);
+                }}
               />
               <FontAwesomeIcon
                 icon={faEdit}
                 title="Edit"
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`/projects/${projectId}/epic/${epic.id}/edit`)
-                  } 
-                }
+                  navigate(`/projects/${projectId}/epic/${epic.id}/edit`);
+                }}
               />
               <FontAwesomeIcon
                 icon={faTrash}
                 title="Delete"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleDeleteEpic(epic.id)}
-                }
+                  handleDeleteEpic(epic.id);
+                }}
               />
             </div>
           </div>
@@ -197,8 +213,22 @@ export default function BacklogDashboard() {
                 <div
                   className="story-card-header"
                   onClick={() => toggleStory(story.id)}
+                  style={story.tasks.length === 0 ? { marginLeft: "30px" } : {}}
                 >
-                  <h4>User Story: {story.title}</h4>
+                  <div className="story-title">
+                    {story.tasks.length > 0 && (
+                    <FontAwesomeIcon
+                      icon={
+                        expandedStoryId === story.id
+                          ? faChevronDown
+                          : faChevronRight
+                        }
+                      />
+                    )}
+                    <h4>User Story: {story.title}</h4>
+                  </div>
+                  {/* </div> */}
+          
                   {/* <button onClick={() => navigate(`/projects/${projectId}/epic/${epic.id}/userstory/${story.id}`)}>
                     View Story
                   </button> */}
@@ -208,26 +238,28 @@ export default function BacklogDashboard() {
                       title="View"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/projects/${projectId}/epic/${epic.id}/userstory/${story.id}`)
-                        }
-                      }
+                        navigate(
+                          `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}`
+                        );
+                      }}
                     />
                     <FontAwesomeIcon
                       icon={faEdit}
                       title="Edit"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/edit`)
-                        }
-                      }
+                        navigate(
+                          `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/edit`
+                        );
+                      }}
                     />
                     <FontAwesomeIcon
                       icon={faTrash}
                       title="Delete"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleDeleteStory(story.id)}
-                      }
+                        handleDeleteStory(story.id);
+                      }}
                     />
                   </div>
                 </div>
@@ -238,11 +270,12 @@ export default function BacklogDashboard() {
                       <div
                         key={task.id}
                         className="task-card-box"
-                        onClick={(e) =>{
+                        onClick={(e) => {
                           e.stopPropagation();
-                          navigate(`/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}`)
-                          }
-                        }
+                          navigate(
+                            `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}`
+                          );
+                        }}
                       >
                         <p>Task: {task.title}</p>
                         {/* <button onClick={() => navigate(`/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}`)}>
@@ -254,26 +287,28 @@ export default function BacklogDashboard() {
                             title="View"
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}`)
-                              }
-                            }
+                              navigate(
+                                `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}`
+                              );
+                            }}
                           />
                           <FontAwesomeIcon
                             icon={faEdit}
                             title="Edit"
-                            onClick={(e) =>{
+                            onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}/edit`)
-                              }
-                            }
+                              navigate(
+                                `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}/edit`
+                              );
+                            }}
                           />
                           <FontAwesomeIcon
                             icon={faTrash}
                             title="Delete"
                             onClick={(e) => {
                               e.stopPropagation();
-                              handleDeleteTask(task.id)}
-                            }
+                              handleDeleteTask(task.id);
+                            }}
                           />
                         </div>
                       </div>

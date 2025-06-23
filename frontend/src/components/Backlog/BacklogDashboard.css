@@ -22,6 +22,20 @@
   cursor: pointer;
 }
 
+.epic-title{
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.story-title{
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
 .epic-card-header h3 {
   margin: 0;
 }

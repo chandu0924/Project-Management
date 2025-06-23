@@ -1,25 +1,29 @@
 // src/components/Layout/Sidebar.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect,  useContext, useState } from 'react';
 import './Sidebar.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronCircleRight, faChevronCircleDown } from "@fortawesome/free-solid-svg-icons";
+import { ProjectContext } from '../../context/ProjectContext';
 
 const Sidebar = () => {
-  const [projects, setProjects] = useState([]);
-  const [isProjectsExpanded, setIsProjectsExpanded] = useState(false);
+  // const [projects, setProjects] = useState([]);
+  const [isProjectsExpanded, setIsProjectsExpanded] = useState(true);
   const [expandedProjectId, setExpandedProjectId] = useState(null);
+  const projectContext = useContext(ProjectContext);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/api/projects/getAll');
-        setProjects(res.data);
-      } catch (err) {
-        console.error("Error fetching projects:", err);
-      }
-    };
-    fetchProjects();
-  }, []);
+  // useEffect(() => {
+  //   const fetchProjects = async () => {
+  //     try {
+  //       const res = await axios.get('http://localhost:5000/api/projects/getAll');
+  //       setProjects(res.data);
+  //     } catch (err) {
+  //       console.error("Error fetching projects:", err);
+  //     }
+  //   };
+  //   fetchProjects();
+  // }, []);
 
   const toggleProjects = () => {
     setIsProjectsExpanded((prev) => !prev);
@@ -35,19 +39,29 @@ const Sidebar = () => {
       <Link to="/">Dashboard</Link>
 
       <div className="collapsible-section">
-        <div className="collapsible-header" onClick={toggleProjects}>
-          {isProjectsExpanded ? '▼' : '▶'}  Projects 
+        {/* <div className="collapsible-header" onClick={toggleProjects}> */}
+        <div className="collapsible-header">
+          {/* {isProjectsExpanded ? '▼' : '▶'}  Projects  */}
+          Projects
         </div>
 
         {isProjectsExpanded &&
-          projects.map((project) => (
+          projectContext.projects.map((project) => (
             <div key={project.id} className="nested-section">
               <div
                 className="nested-header"
                 onClick={() => toggleProjectMenu(project.id)}
               >
-                {expandedProjectId === project.id ? '▼' : '▶'} {project.name} 
+                {/* {expandedProjectId === project.id ? '\uf13a' : '\uf138'} {project.name}  */}
+                {/* <FontAwesomeIcon icon={expandedProjectId === project.id ? "fa-chevron-circle-right" : "fa-chevron-circle-down"} /> */}
+                <FontAwesomeIcon
+                  icon={expandedProjectId === project.id ? faChevronCircleDown : faChevronCircleRight}
+                  style={{ marginRight: "8px" }}
+                  />
+                  {project.name}
+
               </div>
+              
 
               {expandedProjectId === project.id && (
                 <div className="sub-links">
