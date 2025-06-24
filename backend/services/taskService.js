@@ -53,8 +53,8 @@ const getTaskByStoryId = async (req, res) => {
 const updateTask = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description } = req.body;
-        await pool.query(taskQueries.updateTask, [title, description, id]);
+        const { title, description, status } = req.body;
+        await pool.query(taskQueries.updateTask, [title, description, id, status]);
         res.json({ message: "Task updated successfully" });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });

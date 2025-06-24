@@ -46,8 +46,8 @@ Responses:
 const updateUserStory = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, description } = req.body;
-        await pool.query(userStoryQueries.updateUserStory, [name, description, id]);
+        const { title, description } = req.body;
+        await pool.query(userStoryQueries.updateUserStory, [title, description, id]);
         res.json({ message: "User story updated successfully" });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });

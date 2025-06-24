@@ -397,10 +397,22 @@ export default function BacklogDashboard() {
     onClose={() => setEditingEpic(null)}
     onUpdate={async (updated) => {
       try {
-        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/epics/update/${updated.id}`, updated);
-        setEpics((prev) =>
-          prev.map((epic) => (epic.id === updated.id ? { ...epic, ...updated } : epic))
+        const updatedData = {
+          title: updated.title,
+          description: updated.description,
+        };
+
+        await axios.put(
+          `${process.env.REACT_APP_BACKEND_URL}/api/epics/update/${updated.id}`,
+          updatedData
         );
+
+        setEpics((prev) =>
+          prev.map((epic) =>
+            epic.id === updated.id ? { ...epic, ...updatedData, id: updated.id } : epic
+          )
+        );
+
         setEditingEpic(null);
       } catch (err) {
         console.error("Failed to update epic:", err);
@@ -415,12 +427,19 @@ export default function BacklogDashboard() {
     onClose={() => setEditingStory(null)}
     onUpdate={async (updated) => {
       try {
-        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/userstories/update/${updated.id}`, updated);
+
+        const updatedData = {
+          title: updated.title,
+          description: updated.description,
+        };
+
+        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/userstories/update/${updated.id}`, updatedData);
+
         setEpics((prev) =>
           prev.map((epic) => ({
             ...epic,
             stories: epic.stories.map((story) =>
-              story.id === updated.id ? { ...story, ...updated } : story
+              story.id === updated.id ? { ...story, ...updatedData, id: updated.id } : story
             ),
           }))
         );
@@ -438,14 +457,22 @@ export default function BacklogDashboard() {
     onClose={() => setEditingTask(null)}
     onUpdate={async (updated) => {
       try {
-        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/tasks/update/${updated.id}`, updated);
+
+        const updatedData = {
+          title: updated.title,
+          description: updated.description,
+          // priority: updated.priority,
+          status: updated.status
+        }
+
+        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/tasks/update/${updated.id}`, updatedData);
         setEpics((prev) =>
           prev.map((epic) => ({
             ...epic,
             stories: epic.stories.map((story) => ({
               ...story,
               tasks: story.tasks.map((task) =>
-                task.id === updated.id ? { ...task, ...updated } : task
+                task.id === updated.id ? { ...task, ...updatedData, id: updated.id } : task
               ),
             })),
           }))

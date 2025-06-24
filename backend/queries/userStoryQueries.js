@@ -8,7 +8,7 @@ const userStoryQueries = {
     `,    
     updateUserStory: `
       UPDATE clone.user_stories
-      SET name = $1, description = $2
+      SET title = $1, description = $2
       WHERE id = $3
       RETURNING *
     `,

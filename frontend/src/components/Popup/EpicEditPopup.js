@@ -10,7 +10,7 @@ export default function EpicEditPopup({ initialData, onClose, onUpdate }) {
       alert("All fields required");
       return;
     }
-    onUpdate({ ...initialData, title, description });
+    onUpdate({ ...initialData, name:title, description });
   };
 
   return (
