@@ -225,7 +225,7 @@ export default function UnifiedTaskCreation() {
         <label>Priority (1-5):</label>
         <input type="number" min={1} max={5} value={priority} onChange={(e) => setPriority(e.target.value)} required />
 
-        <button type="submit">Create Task</button>
+        <button className="task-create-btn" type="submit">Create Task</button>
         {message && <p className="msg">{message}</p>}
       </form>
     </div>

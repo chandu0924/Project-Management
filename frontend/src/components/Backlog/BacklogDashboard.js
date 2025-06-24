@@ -9,8 +9,12 @@ import {
   faTrash,
   faChevronRight,
   faChevronDown,
+  faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
 import Popup from "../Popup/Popup";
+import EpicEditPopup from "../Popup/EpicEditPopup";
+import StoryEditPopup from "../Popup/StoryEditPopup";
+import TaskEditPopup from "../Popup/TaskEditPopup";
 
 export default function BacklogDashboard() {
   const [epics, setEpics] = useState([]);
@@ -22,8 +26,29 @@ export default function BacklogDashboard() {
     type: "warning",
     onConfirm: null,
   });
+
+  const [epicActionId, setEpicActionId] = useState(null);
+  const [storyActionId, setStoryActionId] = useState(null);
+  const [taskActionId, setTaskActionId] = useState(null);
+
+  const [editingEpic, setEditingEpic] = useState(null);
+  const [editingStory, setEditingStory] = useState(null);
+  const [editingTask, setEditingTask] = useState(null);
+
+
   const navigate = useNavigate();
   const { projectId } = useParams();
+
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setEpicActionId(null);
+      setStoryActionId(null);
+      setTaskActionId(null);
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   const showPopup = ({ message, onConfirm, type = "warning" }) => {
     setPopupData({
@@ -79,10 +104,13 @@ export default function BacklogDashboard() {
     setExpandedStoryId(null);
   };
 
+  const toggleStory = (id) => {
+    setExpandedStoryId((prev) => (prev === id ? null : id));
+  };
+
   const handleDeleteEpic = (epicId) => {
     showPopup({
       message: "Are you sure you want to delete this epic?",
-      type: "warning",
       onConfirm: async () => {
         try {
           await axios.delete(
@@ -101,14 +129,12 @@ export default function BacklogDashboard() {
   const handleDeleteStory = (storyId) => {
     showPopup({
       message: "Are you sure you want to delete this user story?",
-      type: "warning",
       onConfirm: async () => {
         try {
           const updated = epics.map((epic) => ({
             ...epic,
             stories: epic.stories.filter((story) => story.id !== storyId),
           }));
-
           await axios.delete(
             `${process.env.REACT_APP_BACKEND_URL}/api/userstories/delete/${storyId}`
           );
@@ -125,7 +151,6 @@ export default function BacklogDashboard() {
   const handleDeleteTask = (taskId) => {
     showPopup({
       message: "Are you sure you want to delete this task?",
-      type: "warning",
       onConfirm: async () => {
         try {
           const updated = epics.map((epic) => ({
@@ -135,7 +160,6 @@ export default function BacklogDashboard() {
               tasks: story.tasks.filter((task) => task.id !== taskId),
             })),
           }));
-
           await axios.delete(
             `${process.env.REACT_APP_BACKEND_URL}/api/tasks/delete/${taskId}`
           );
@@ -149,24 +173,21 @@ export default function BacklogDashboard() {
     });
   };
 
-  const toggleStory = (id) => {
-    setExpandedStoryId((prev) => (prev === id ? null : id));
-  };
-
   return (
     <div className="backlog-dashboard-wrapper">
       <div className="backlog-header">
         <h2 className="backlog-dashboard-header">Project Backlog</h2>
-        {/* <h2>Epics</h2> */}
         <button onClick={() => navigate(`/projects/${projectId}/epic/new`)}>
           Create
         </button>
       </div>
+
       {epics.map((epic) => (
         <div key={epic.id} className="epic-card-wrapper">
-          <div className="epic-card-header" onClick={() => toggleEpic(epic.id)}>
+          <div className="epic-card-header">
             <div
               className="epic-title"
+              onClick={() => toggleEpic(epic.id)}
               style={epic.stories.length === 0 ? { marginLeft: "30px" } : {}}
             >
               {epic.stories.length > 0 && (
@@ -178,89 +199,117 @@ export default function BacklogDashboard() {
               )}
               <h3>Epic: {epic.title}</h3>
             </div>
-            {/* <button onClick={() => navigate(`/projects/${projectId}/epic/${epic.id}`)}>View Epic</button> */}
-            <div className="action-icons">
-              <FontAwesomeIcon
-                icon={faEye}
-                title="View"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/projects/${projectId}/epic/${epic.id}`);
-                }}
-              />
-              <FontAwesomeIcon
-                icon={faEdit}
-                title="Edit"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/projects/${projectId}/epic/${epic.id}/edit`);
-                }}
-              />
-              <FontAwesomeIcon
-                icon={faTrash}
-                title="Delete"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeleteEpic(epic.id);
-                }}
-              />
+
+            <div className="action-icons" onClick={(e) => e.stopPropagation()}>
+              {epicActionId === epic.id ? (
+                <>
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    title="View"
+                    onClick={() => {
+                      navigate(`/projects/${projectId}/epic/${epic.id}`);
+                      setEpicActionId(null);
+                    }}
+                  />
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    title="Edit"
+                    onClick={() => {
+                      // navigate(`/projects/${projectId}/epic/${epic.id}/edit`);
+                      setEditingEpic(epic);
+                      setEpicActionId(null);
+                    }}
+                  />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    title="Delete"
+                    onClick={() => {
+                      handleDeleteEpic(epic.id);
+                      setEpicActionId(null);
+                    }}
+                  />
+                </>
+              ) : (
+                <FontAwesomeIcon
+                  icon={faEllipsisV}
+                  style={{ cursor: "pointer", width: "20px" }}
+                  title="Options"
+                  onClick={() => {
+                    setEpicActionId(epic.id);
+                    setStoryActionId(null);
+                    setTaskActionId(null);
+                  }}
+                />
+              )}
             </div>
           </div>
 
           {expandedEpicId === epic.id &&
             epic.stories.map((story) => (
               <div key={story.id} className="story-card-wrapper">
-                <div
-                  className="story-card-header"
-                  onClick={() => toggleStory(story.id)}
-                  style={story.tasks.length === 0 ? { marginLeft: "30px" } : {}}
-                >
-                  <div className="story-title">
+                <div className="story-card-header">
+                  <div
+                    className="story-title"
+                    onClick={() => toggleStory(story.id)}
+                    style={story.tasks.length === 0 ? { marginLeft: "30px" } : {}}
+                  >
                     {story.tasks.length > 0 && (
-                    <FontAwesomeIcon
-                      icon={
-                        expandedStoryId === story.id
-                          ? faChevronDown
-                          : faChevronRight
+                      <FontAwesomeIcon
+                        icon={
+                          expandedStoryId === story.id
+                            ? faChevronDown
+                            : faChevronRight
                         }
                       />
                     )}
                     <h4>User Story: {story.title}</h4>
                   </div>
-                  {/* </div> */}
-          
-                  {/* <button onClick={() => navigate(`/projects/${projectId}/epic/${epic.id}/userstory/${story.id}`)}>
-                    View Story
-                  </button> */}
-                  <div className="action-icons">
-                    <FontAwesomeIcon
-                      icon={faEye}
-                      title="View"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(
-                          `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}`
-                        );
-                      }}
-                    />
-                    <FontAwesomeIcon
-                      icon={faEdit}
-                      title="Edit"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(
-                          `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/edit`
-                        );
-                      }}
-                    />
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      title="Delete"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteStory(story.id);
-                      }}
-                    />
+
+                  <div className="action-icons" onClick={(e) => e.stopPropagation()}>
+                    {storyActionId === story.id ? (
+                      <>
+                        <FontAwesomeIcon
+                          icon={faEye}
+                          title="View"
+                          onClick={() => {
+                            navigate(
+                              `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}`
+                            );
+                            setStoryActionId(null);
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          title="Edit"
+                          onClick={() => {
+                            // navigate(
+                            //   `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/edit`
+                            // );
+                            setEditingStory(story);
+                            setStoryActionId(null);
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          title="Delete"
+                          onClick={() => {
+                            handleDeleteStory(story.id);
+                            setStoryActionId(null);
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faEllipsisV}
+                        title="Options"
+                        style={{ cursor: "pointer", width: "20px" }}
+                        onClick={() => {
+                          setStoryActionId(story.id);
+                          setEpicActionId(null);
+                          setTaskActionId(null);
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
 
@@ -278,38 +327,51 @@ export default function BacklogDashboard() {
                         }}
                       >
                         <p>Task: {task.title}</p>
-                        {/* <button onClick={() => navigate(`/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}`)}>
-                          View Task
-                        </button> */}
-                        <div className="action-icons">
-                          <FontAwesomeIcon
-                            icon={faEye}
-                            title="View"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(
-                                `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}`
-                              );
-                            }}
-                          />
-                          <FontAwesomeIcon
-                            icon={faEdit}
-                            title="Edit"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(
-                                `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}/edit`
-                              );
-                            }}
-                          />
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            title="Delete"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteTask(task.id);
-                            }}
-                          />
+                        <div className="action-icons" onClick={(e) => e.stopPropagation()}>
+                          {taskActionId === task.id ? (
+                            <>
+                              <FontAwesomeIcon
+                                icon={faEye}
+                                title="View"
+                                onClick={() => {
+                                  navigate(
+                                    `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}`
+                                  );
+                                  setTaskActionId(null);
+                                }}
+                              />
+                              <FontAwesomeIcon
+                                icon={faEdit}
+                                title="Edit"
+                                onClick={() => {
+                                  // navigate(
+                                  //   `/projects/${projectId}/epic/${epic.id}/userstory/${story.id}/task/${task.id}/edit`
+                                  // );
+                                  setEditingTask(task);
+                                  setTaskActionId(null);
+                                }}
+                              />
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                title="Delete"
+                                onClick={() => {
+                                  handleDeleteTask(task.id);
+                                  setTaskActionId(null);
+                                }}
+                              />
+                            </>
+                          ) : (
+                            <FontAwesomeIcon
+                              icon={faEllipsisV}
+                              style={{ cursor: "pointer", width: "20px" }}
+                              title="Options"
+                              onClick={() => {
+                                setTaskActionId(task.id);
+                                setEpicActionId(null);
+                                setStoryActionId(null);
+                              }}
+                            />
+                          )}
                         </div>
                       </div>
                     ))}
@@ -319,6 +381,7 @@ export default function BacklogDashboard() {
             ))}
         </div>
       ))}
+
       {popupData.visible && (
         <Popup
           type={popupData.type}
@@ -327,6 +390,74 @@ export default function BacklogDashboard() {
           onCancel={handleCancelPopup}
         />
       )}
+
+      {editingEpic && (
+  <EpicEditPopup
+    initialData={editingEpic}
+    onClose={() => setEditingEpic(null)}
+    onUpdate={async (updated) => {
+      try {
+        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/epics/update/${updated.id}`, updated);
+        setEpics((prev) =>
+          prev.map((epic) => (epic.id === updated.id ? { ...epic, ...updated } : epic))
+        );
+        setEditingEpic(null);
+      } catch (err) {
+        console.error("Failed to update epic:", err);
+      }
+    }}
+  />
+)}
+
+{editingStory && (
+  <StoryEditPopup
+    initialData={editingStory}
+    onClose={() => setEditingStory(null)}
+    onUpdate={async (updated) => {
+      try {
+        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/userstories/update/${updated.id}`, updated);
+        setEpics((prev) =>
+          prev.map((epic) => ({
+            ...epic,
+            stories: epic.stories.map((story) =>
+              story.id === updated.id ? { ...story, ...updated } : story
+            ),
+          }))
+        );
+        setEditingStory(null);
+      } catch (err) {
+        console.error("Failed to update story:", err);
+      }
+    }}
+  />
+)}
+
+{editingTask && (
+  <TaskEditPopup
+    initialData={editingTask}
+    onClose={() => setEditingTask(null)}
+    onUpdate={async (updated) => {
+      try {
+        await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/tasks/update/${updated.id}`, updated);
+        setEpics((prev) =>
+          prev.map((epic) => ({
+            ...epic,
+            stories: epic.stories.map((story) => ({
+              ...story,
+              tasks: story.tasks.map((task) =>
+                task.id === updated.id ? { ...task, ...updated } : task
+              ),
+            })),
+          }))
+        );
+        setEditingTask(null);
+      } catch (err) {
+        console.error("Failed to update task:", err);
+      }
+    }}
+  />
+)}
+
     </div>
   );
 }
