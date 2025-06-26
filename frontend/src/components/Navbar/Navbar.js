@@ -1,8 +1,9 @@
 // src/components/Layout/Navbar.jsx
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import './Navbar.css';
+import GlobalSearch from '../GlobalSearch/GlobalSearch';
 
 const Navbar = () => {
   const cookies = new Cookies();
@@ -19,6 +20,9 @@ const Navbar = () => {
       <div className="navbar-left">MyCompany</div>
 
       <div className="navbar-right">
+        <GlobalSearch 
+          className="global-search"
+        />
         <div className="dropdown">
           <button onClick={() => setDropdownOpen(!dropdownOpen)} className="dropdown-toggle">
             Profile

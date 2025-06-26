@@ -12,7 +12,12 @@
     font-size: 1.5rem;
     font-weight: bold;
   }
-  
+  .navbar-right {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 20px;
+  }
   .navbar-right .dropdown {
     position: relative;
   }

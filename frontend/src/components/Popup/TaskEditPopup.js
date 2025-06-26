@@ -17,7 +17,7 @@ export default function TaskEditPopup({ initialData, onClose, onUpdate }) {
   return (
     <div className="popup-overlay" onClick={onClose}>
       <div className="popup" onClick={(e) => e.stopPropagation()}>
-        <h3>Edit Task</h3>
+        <h3 className="popup-title">Edit Task</h3>
         <input
           type="text"
           placeholder="Task Title"
