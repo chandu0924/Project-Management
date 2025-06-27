@@ -1,0 +1,46 @@
+.projectlist-container {
+  padding: 2rem;
+  background-color: #f4f4f8;
+  font-family: Arial, sans-serif;
+}
+
+.projectlist-heading {
+  margin-bottom: 20px;
+  /* font-size: 2rem; */
+}
+
+.projectlist-section {
+  margin-bottom: 20px;
+}
+
+.projectlist-list {
+  list-style: none;
+  padding: 0;
+}
+
+.projectlist-item {
+  background: #fff;
+  border-left: 5px solid #007bff;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.projectlist-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.projectlist-chart {
+  height: 200px;
+  background-color: #fff;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+  color: #666;
+}

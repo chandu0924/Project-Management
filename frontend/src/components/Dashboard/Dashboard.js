@@ -42,16 +42,18 @@ const Dashboard = () => {
         {["Projects", "Epics", "User Stories", "Tasks"].map((tab) => (
           <button
             key={tab}
-            className={`tab-button ${activeTab === tab ? "active" : ""}`}
+            className={`tab-button-${tab} tab-button ${activeTab === tab ? "active" : ""}`}
             onClick={() => setActiveTab(tab)}
           >
             {tab}
           </button>
         ))}
       </div>
-      <hr className="tab-separator" />
+      {/* <hr className="tab-separator" /> */}
 
-      {renderContent()}
+      <div className="dashboard-content">
+        {renderContent()}
+      </div>  
 
       {showModal && <CreateProject onClose={() => setShowModal(false)} />}
     </div>

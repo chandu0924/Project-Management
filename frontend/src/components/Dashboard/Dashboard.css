@@ -45,19 +45,17 @@
   cursor: pointer;
   color: #333;
   width: 250px;
-}
-
-.tab-button:hover {
-  color: #007acc;
+  border: none;
 }
 
 .tab-button.active {
-  color: #007acc;
+  /* color: #007acc; */
   font-weight: bold;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 250px;
-  border: 2px solid #007acc;
-  border-bottom: none;
+  /* border: 2px solid #007acc; */
+  /* border-bottom: none; */
+  border: none;
 }
 
 .tab-separator {
@@ -73,4 +71,31 @@
 .tab-content {
   padding: 20px 0;
   font-size: 15px;
+}
+
+.dashboard-content{
+  display: grid;
+  width: 1350px;
+  height: 1000px;
+  /* border: 1px solid black; */
+  border-top: 1px solid #0f172a;
+  justify-self: center;
+  padding-top: 20px;
+}
+
+.tab-button-Projects{
+  background-color: #0077b6;
+  color: white;
+}
+.tab-button-Epics{
+  background-color: #00b4d8;
+  color: white;
+}
+.tab-button-User{
+  background-color: #90e0ef;
+  color: black;
+}
+.tab-button-Tasks{
+  background-color: #caf0f8;
+  color: black;
 }
