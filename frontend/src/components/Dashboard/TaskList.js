@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Doughnut, Bar, Line } from "react-chartjs-2";
+import React, { useEffect, useContext } from "react";
+import { Doughnut, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -8,8 +8,6 @@ import {
   CategoryScale,
   LinearScale,
   BarElement,
-  PointElement,
-  LineElement,
 } from "chart.js";
 import "./ProjectList.css";
 import { DataContext } from "../../context/DataContext";
@@ -19,64 +17,66 @@ ChartJS.register(
   Tooltip,
   Legend,
   CategoryScale,
-  LinearScale,  
-  BarElement,
-  PointElement,
-  LineElement
+  LinearScale,
+  BarElement
 );
 
-const dummyProjects = [
-  { id: 1, title: "Project Alpha", status: "Active" },
-  { id: 2, title: "Project Beta", status: "Planning" },
-  { id: 3, title: "Project Gamma", status: "Completed" },
-  { id: 4, title: "Project Delta", status: "On Hold" },
-  { id: 5, title: "Project Epsilon", status: "Active" },
-  { id: 6, title: "Project Zeta", status: "Completed" },
-  { id: 7, title: "Project Eta", status: "Planning" },
-  { id: 8, title: "Project Theta", status: "In Review" },
-  { id: 9, title: "Project Iota", status: "Active" },
-  { id: 10, title: "Project Kappa", status: "Planning" },
-];
-
-// Dummy chart data
+// Chart 1: Task Status Breakdown
 const taskStatusData = {
-  labels: ["Active", "Planning", "Completed", "On Hold", "In Review"],
+  labels: ["To Do", "In Progress", "Review", "Done"],
   datasets: [
     {
       label: "Task Status",
-      data: [3, 3, 2, 1, 1],
-      backgroundColor: ["#4ade80", "#facc15", "#60a5fa", "#f87171", "#a78bfa"],
-      borderWidth: 3,
+      data: [6, 4, 2, 8],
+      backgroundColor: ["#facc15", "#60a5fa", "#a78bfa", "#4ade80"],
     },
   ],
 };
 
-const velocityData = {
-  labels: ["Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4"],
+// Chart 2: Tasks Assigned per User
+const tasksPerUserData = {
+  labels: ["Alice", "Bob", "Carol", "David"],
   datasets: [
     {
-      label: "Story Points Completed",
-      data: [20, 25, 18, 30],
+      label: "Tasks Assigned",
+      data: [5, 7, 3, 4],
       backgroundColor: "#60a5fa",
+      borderRadius: 6,
     },
   ],
 };
 
-const burndownData = {
-  labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
+// Chart 3: Tasks by Priority
+const taskPriorityData = {
+  labels: ["High", "Medium", "Low"],
   datasets: [
     {
-      label: "Ideal",
-      data: [50, 40, 30, 20, 10],
-      borderColor: "#94a3b8",
-      fill: false,
-      borderDash: [5, 5],
+      data: [5, 8, 3],
+      backgroundColor: ["#f87171", "#facc15", "#60a5fa"],
     },
+  ],
+};
+
+// Chart 4: Overdue Tasks per User
+const overdueTasksData = {
+  labels: ["Alice", "Bob", "Carol"],
+  datasets: [
     {
-      label: "Actual",
-      data: [50, 42, 34, 25, 15],
-      borderColor: "#f87171",
-      fill: true,
+      label: "Overdue Tasks",
+      data: [2, 1, 3],
+      backgroundColor: "#f87171",
+    },
+  ],
+};
+
+// Chart 5: Average Task Age
+const taskAgeData = {
+  labels: ["To Do", "In Progress", "Review", "Done"],
+  datasets: [
+    {
+      label: "Avg. Age (days)",
+      data: [5, 3, 4, 2],
+      backgroundColor: "#a78bfa",
     },
   ],
 };
@@ -86,12 +86,12 @@ const TaskList = () => {
 
   useEffect(() => {
     dataContext.fetchTasks();
-  }, [dataContext.tasks]);
+  }, []);
 
   return (
     <div className="list-container">
       <div className="list-section">
-        <h2 className="list-heading">UserStory List</h2>
+        <h2 className="list-heading">Task List</h2>
         <ul className="list-list">
           {dataContext.tasks.map((task) => (
             <li key={task.id} className="list-item">
@@ -102,20 +102,37 @@ const TaskList = () => {
       </div>
 
       <div className="list-section">
-        <h2 className="list-heading">Overview Charts</h2>
+        <h2 className="list-heading">Task Insights</h2>
         <div className="list-chart-grid">
+          {/* Chart 1 */}
           <div className="list-chart">
-            <h4>Task Status</h4>
+            <h4>Task Status Breakdown</h4>
             <Doughnut data={taskStatusData} />
           </div>
+
+          {/* Chart 2 */}
           <div className="list-chart">
-            <h4>Sprint Velocity</h4>
-            <Bar data={velocityData} />
+            <h4>Tasks Assigned per User</h4>
+            <Bar data={tasksPerUserData} />
           </div>
-          {/* <div className="list-chart">
-            <h4>Sprint Burn-down</h4>
-            <Line data={burndownData} />
-          </div> */}
+
+          {/* Chart 3 */}
+          <div className="list-chart">
+            <h4>Task Priority Distribution</h4>
+            <Doughnut data={taskPriorityData} />
+          </div>
+
+          {/* Chart 4 */}
+          <div className="list-chart">
+            <h4>Overdue Tasks per User</h4>
+            <Bar data={overdueTasksData} />
+          </div>
+
+          {/* Chart 5 */}
+          <div className="list-chart">
+            <h4>Average Task Age</h4>
+            <Bar data={taskAgeData} />
+          </div>
         </div>
       </div>
     </div>

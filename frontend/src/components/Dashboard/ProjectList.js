@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Doughnut, Bar, Line } from "react-chartjs-2";
+import React, { useEffect, useContext } from "react";
+import { Bar, Doughnut, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
   CategoryScale,
   LinearScale,
   BarElement,
+  Tooltip,
+  Legend,
+  ArcElement,
   PointElement,
   LineElement,
 } from "chart.js";
@@ -15,79 +15,74 @@ import "./ProjectList.css";
 import { DataContext } from "../../context/DataContext";
 
 ChartJS.register(
-  ArcElement,
-  Tooltip,
-  Legend,
   CategoryScale,
-  LinearScale,  
+  LinearScale,
   BarElement,
+  ArcElement,
   PointElement,
-  LineElement
+  LineElement,
+  Tooltip,
+  Legend
 );
 
-const dummyProjects = [
-  { id: 1, title: "Project Alpha", status: "Active" },
-  { id: 2, title: "Project Beta", status: "Planning" },
-  { id: 3, title: "Project Gamma", status: "Completed" },
-  { id: 4, title: "Project Delta", status: "On Hold" },
-  { id: 5, title: "Project Epsilon", status: "Active" },
-  { id: 6, title: "Project Zeta", status: "Completed" },
-  { id: 7, title: "Project Eta", status: "Planning" },
-  { id: 8, title: "Project Theta", status: "In Review" },
-  { id: 9, title: "Project Iota", status: "Active" },
-  { id: 10, title: "Project Kappa", status: "Planning" },
-];
-
-// Dummy chart data
-const taskStatusData = {
-  labels: ["Active", "Planning", "Completed", "On Hold", "In Review"],
+// Chart 1: Epics per Project
+const epicsPerProjectData = {
+  labels: ["Project A", "Project B", "Project C"],
   datasets: [
     {
-      label: "Task Status",
-      data: [3, 3, 2, 1, 1],
-      backgroundColor: ["#4ade80", "#facc15", "#60a5fa", "#f87171", "#a78bfa"],
-      borderWidth: 3,
-    },
-  ],
-};
-
-const velocityData = {
-  labels: ["Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4"],
-  datasets: [
-    {
-      label: "Story Points Completed",
-      data: [20, 25, 18, 30],
+      label: "Epics",
+      data: [5, 8, 3],
       backgroundColor: "#60a5fa",
+      borderRadius: 6,
     },
   ],
 };
 
-const burndownData = {
-  labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
+// Chart 2: Contributors per Project
+const contributorsData = {
+  labels: ["Project A", "Project B", "Project C"],
   datasets: [
     {
-      label: "Ideal",
-      data: [50, 40, 30, 20, 10],
-      borderColor: "#94a3b8",
-      fill: false,
-      borderDash: [5, 5],
+      label: "Contributors",
+      data: [3, 4, 2],
+      backgroundColor: "#facc15",
+      borderRadius: 6,
     },
+  ],
+};
+
+// Chart 3: Project Completion %
+const projectCompletionData = {
+  labels: ["Project A", "Project B", "Project C"],
+  datasets: [
     {
-      label: "Actual",
-      data: [50, 42, 34, 25, 15],
-      borderColor: "#f87171",
-      fill: true,
+      label: "Completion %",
+      data: [70, 45, 90],
+      backgroundColor: ["#4ade80", "#60a5fa", "#f87171"],
+    },
+  ],
+};
+
+// Chart 4: Project Creation Trend
+const creationTrendData = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+  datasets: [
+    {
+      label: "Projects Created",
+      data: [2, 5, 4, 7, 3],
+      fill: false,
+      borderColor: "#a78bfa",
+      tension: 0.3,
     },
   ],
 };
 
 const ProjectList = () => {
   const dataContext = useContext(DataContext);
-  const [projectsListData, setProjectsListData] = useState([]);
 
   useEffect(() => {
     dataContext.fetchProjects();
-  }, [dataContext.projects]);
+  }, []);
 
   return (
     <div className="list-container">
@@ -103,20 +98,34 @@ const ProjectList = () => {
       </div>
 
       <div className="list-section">
-        <h2 className="list-heading">Overview Charts</h2>
+        <h2 className="list-heading">Project Analytics</h2>
         <div className="list-chart-grid">
+          {/* Chart 1: Epics per Project */}
           <div className="list-chart">
-            <h4>Task Status</h4>
-            <Doughnut data={taskStatusData} />
+            <h4>Epics per Project</h4>
+            <Bar data={epicsPerProjectData} />
           </div>
+
+          {/* Chart 2: Contributors per Project */}
           <div className="list-chart">
-            <h4>Sprint Velocity</h4>
-            <Bar data={velocityData} />
+            <h4>Contributors per Project</h4>
+            <Bar
+              data={contributorsData}
+              options={{ indexAxis: "y" }}
+            />
           </div>
-          {/* <div className="list-chart">
-            <h4>Sprint Burn-down</h4>
-            <Line data={burndownData} />
-          </div> */}
+
+          {/* Chart 3: Project Completion Percentage */}
+          <div className="list-chart">
+            <h4>Project Completion %</h4>
+            <Doughnut data={projectCompletionData} />
+          </div>
+
+          {/* Chart 4: Project Creation Trend */}
+          <div className="list-chart">
+            <h4>Project Creation Trend</h4>
+            <Line data={creationTrendData} />
+          </div>
         </div>
       </div>
     </div>

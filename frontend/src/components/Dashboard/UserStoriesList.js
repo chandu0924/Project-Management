@@ -1,98 +1,76 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Doughnut, Bar, Line } from "react-chartjs-2";
+import React, { useEffect, useContext } from "react";
+import { Doughnut, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
   CategoryScale,
   LinearScale,
   BarElement,
-  PointElement,
-  LineElement,
+  ArcElement,
+  Tooltip,
+  Legend,
 } from "chart.js";
 import "./ProjectList.css";
 import { DataContext } from "../../context/DataContext";
 
 ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
   ArcElement,
   Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,  
-  BarElement,
-  PointElement,
-  LineElement
+  Legend
 );
 
-const dummyProjects = [
-  { id: 1, title: "Project Alpha", status: "Active" },
-  { id: 2, title: "Project Beta", status: "Planning" },
-  { id: 3, title: "Project Gamma", status: "Completed" },
-  { id: 4, title: "Project Delta", status: "On Hold" },
-  { id: 5, title: "Project Epsilon", status: "Active" },
-  { id: 6, title: "Project Zeta", status: "Completed" },
-  { id: 7, title: "Project Eta", status: "Planning" },
-  { id: 8, title: "Project Theta", status: "In Review" },
-  { id: 9, title: "Project Iota", status: "Active" },
-  { id: 10, title: "Project Kappa", status: "Planning" },
-];
-
-// Dummy chart data
-const taskStatusData = {
-  labels: ["Active", "Planning", "Completed", "On Hold", "In Review"],
+// Chart 1: Tasks per User Story
+const tasksPerStoryData = {
+  labels: ["Story A", "Story B", "Story C"],
   datasets: [
     {
-      label: "Task Status",
-      data: [3, 3, 2, 1, 1],
-      backgroundColor: ["#4ade80", "#facc15", "#60a5fa", "#f87171", "#a78bfa"],
-      borderWidth: 3,
-    },
-  ],
-};
-
-const velocityData = {
-  labels: ["Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4"],
-  datasets: [
-    {
-      label: "Story Points Completed",
-      data: [20, 25, 18, 30],
+      label: "Tasks",
+      data: [5, 3, 7],
       backgroundColor: "#60a5fa",
+      borderRadius: 6,
     },
   ],
 };
 
-const burndownData = {
-  labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
+// Chart 2: Story Completion %
+const storyCompletionData = {
+  labels: ["Story A", "Story B", "Story C"],
   datasets: [
     {
-      label: "Ideal",
-      data: [50, 40, 30, 20, 10],
-      borderColor: "#94a3b8",
-      fill: false,
-      borderDash: [5, 5],
+      label: "% Completed",
+      data: [80, 50, 100],
+      backgroundColor: "#34d399",
+      borderRadius: 4,
     },
+  ],
+};
+
+// Chart 3: Priority Distribution
+const priorityDistributionData = {
+  labels: ["High", "Medium", "Low"],
+  datasets: [
     {
-      label: "Actual",
-      data: [50, 42, 34, 25, 15],
-      borderColor: "#f87171",
-      fill: true,
+      label: "Priority",
+      data: [4, 6, 3],
+      backgroundColor: ["#f87171", "#facc15", "#60a5fa"],
+      borderWidth: 2,
     },
   ],
 };
 
 const UserStoryList = () => {
   const dataContext = useContext(DataContext);
-  const [projectsListData, setProjectsListData] = useState([]);
 
   useEffect(() => {
     dataContext.fetchStories();
-  }, [dataContext.stories]);
+  }, []);
 
   return (
     <div className="list-container">
       <div className="list-section">
-        <h2 className="list-heading">UserStory List</h2>
+        <h2 className="list-heading">User Story List</h2>
         <ul className="list-list">
           {dataContext.stories.map((story) => (
             <li key={story.id} className="list-item">
@@ -103,20 +81,38 @@ const UserStoryList = () => {
       </div>
 
       <div className="list-section">
-        <h2 className="list-heading">Overview Charts</h2>
+        <h2 className="list-heading">Story Insights</h2>
         <div className="list-chart-grid">
+          {/* Chart 1 */}
           <div className="list-chart">
-            <h4>Task Status</h4>
-            <Doughnut data={taskStatusData} />
+            <h4>Tasks per Story</h4>
+            <Bar data={tasksPerStoryData} />
           </div>
+
+          {/* Chart 2 */}
           <div className="list-chart">
-            <h4>Sprint Velocity</h4>
-            <Bar data={velocityData} />
+            <h4>Story Completion %</h4>
+            <Bar
+              data={storyCompletionData}
+              options={{
+                indexAxis: "y",
+                scales: {
+                  x: {
+                    max: 100,
+                    ticks: {
+                      callback: (val) => `${val}%`,
+                    },
+                  },
+                },
+              }}
+            />
           </div>
-          {/* <div className="list-chart">
-            <h4>Sprint Burn-down</h4>
-            <Line data={burndownData} />
-          </div> */}
+
+          {/* Chart 3 */}
+          <div className="list-chart">
+            <h4>Priority Distribution</h4>
+            <Doughnut data={priorityDistributionData} />
+          </div>
         </div>
       </div>
     </div>
