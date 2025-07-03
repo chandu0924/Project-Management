@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleRight, faChevronCircleDown } from "@fortawesome/free-solid-svg-icons";
-import { ProjectContext } from '../../context/ProjectContext';
+import {ProjectDataContext} from '../../context/ProjectDataContext';
 
 const Sidebar = () => {
   // const [projects, setProjects] = useState([]);
   const [isProjectsExpanded, setIsProjectsExpanded] = useState(true);
   const [expandedProjectId, setExpandedProjectId] = useState(null);
-  const projectContext = useContext(ProjectContext);
+  const projectContext = useContext(ProjectDataContext);
 
   // useEffect(() => {
   //   const fetchProjects = async () => {
@@ -24,6 +24,12 @@ const Sidebar = () => {
   //   };
   //   fetchProjects();
   // }, []);
+
+  useEffect(() => {
+    console.log("project context", projectContext)
+    projectContext.fetchProjects();
+    console.log("projects fetched", projectContext.projects)
+  }, []);
 
   const toggleProjects = () => {
     setIsProjectsExpanded((prev) => !prev);

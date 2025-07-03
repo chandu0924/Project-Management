@@ -15,7 +15,8 @@ CREATE TABLE clone.projects (
   name VARCHAR(100) NOT NULL,
   description TEXT,
   owner_id INTEGER REFERENCES clone.users(id) ON DELETE SET NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status VARCHAR(20) DEFAULT 'ToDo'
 );
 
 CREATE TABLE clone.epics (
