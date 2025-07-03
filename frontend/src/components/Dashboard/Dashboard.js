@@ -30,12 +30,12 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <div className="dashboard-header">
         <h2>Dashboard</h2>
-        <button
+        { activeTab === "Projects" && <button
           className="create-project-button"
           onClick={() => setShowModal(true)}
         >
           Create Project
-        </button>
+        </button>}
       </div>
 
       <div className="tab-buttons-container">
