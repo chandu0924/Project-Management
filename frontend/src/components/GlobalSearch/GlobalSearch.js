@@ -70,6 +70,7 @@ const GlobalSearch = () => {
                     <li key={item.id}>{item.title}</li>
                   ))}
                 </ul>
+                <hr />
               </div>
             ) : null
           )}
