@@ -3,14 +3,14 @@ import { useCookies } from "react-cookie";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Main from "./Main.js";
-import ProjectDataProvider from "./context/ProjectDataContext.js";
+import DataProvider from "./context/DataContext.js";
 
 export default function App() {
   const [cookies] = useCookies(["token"]);
   const token = cookies.token;
 
   return (
-    <ProjectDataProvider>
+    <DataProvider>
       <Routes>
         <Route
           path="/login"
@@ -25,6 +25,6 @@ export default function App() {
           element={token ? <Main /> : <Navigate to="/login" replace />}
         />
       </Routes>
-    </ProjectDataProvider>
+    </DataProvider>
   );
 }

@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleRight, faChevronCircleDown } from "@fortawesome/free-solid-svg-icons";
-import {ProjectDataContext} from '../../context/ProjectDataContext';
+import {DataContext} from '../../context/DataContext';
 
 const Sidebar = () => {
   // const [projects, setProjects] = useState([]);
   const [isProjectsExpanded, setIsProjectsExpanded] = useState(true);
   const [expandedProjectId, setExpandedProjectId] = useState(null);
-  const projectContext = useContext(ProjectDataContext);
+  const dataContext = useContext(DataContext);
 
   // useEffect(() => {
   //   const fetchProjects = async () => {
@@ -26,9 +26,9 @@ const Sidebar = () => {
   // }, []);
 
   useEffect(() => {
-    console.log("project context", projectContext)
-    projectContext.fetchProjects();
-    console.log("projects fetched", projectContext.projects)
+    console.log("project context", dataContext)
+    dataContext.fetchProjects();
+    console.log("projects fetched", dataContext.projects)
   }, []);
 
   const toggleProjects = () => {
@@ -52,19 +52,19 @@ const Sidebar = () => {
         </div>
 
         {isProjectsExpanded &&
-          projectContext.projects.map((project) => (
+          dataContext.projects.map((project) => (
             <div key={project.id} className="nested-section">
               <div
                 className="nested-header"
                 onClick={() => toggleProjectMenu(project.id)}
               >
-                {/* {expandedProjectId === project.id ? '\uf13a' : '\uf138'} {project.name}  */}
+                {/* {expandedProjectId === project.id ? '\uf13a' : '\uf138'} {project.title}  */}
                 {/* <FontAwesomeIcon icon={expandedProjectId === project.id ? "fa-chevron-circle-right" : "fa-chevron-circle-down"} /> */}
                 <FontAwesomeIcon
                   icon={expandedProjectId === project.id ? faChevronCircleDown : faChevronCircleRight}
                   style={{ marginRight: "8px" }}
                   />
-                  {project.name}
+                  {project.title}
 
               </div>
               

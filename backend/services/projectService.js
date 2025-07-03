@@ -23,14 +23,14 @@ const getProjectById = async (req, res) => {
 /*
 paylaod
 {
-  "name": "Project Name",
+  "title": "Project Name",
   "description": "Project Description"
 }
 */
 const createProject = async (req, res) => {
     try {
-        const { name, description } = req.body;
-        await pool.query(projectQueries.createProject, [name, description]);
+        const { title, description } = req.body;
+        await pool.query(projectQueries.createProject, [title, description]);
         res.status(201).json({ message: "Project created successfully" });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });
@@ -40,8 +40,8 @@ const createProject = async (req, res) => {
 const updateProject = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, description } = req.body;
-        await pool.query(projectQueries.updateProject, [name, description, id]);
+        const { title, description } = req.body;
+        await pool.query(projectQueries.updateProject, [title, description, id]);
         res.json({ message: "Project updated successfully" });
     } catch (err) {
         res.status(500).json({ message: "Server error", error: err.message });

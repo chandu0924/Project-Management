@@ -67,7 +67,7 @@ const GlobalSearch = () => {
                 <h4>{type.toUpperCase()}</h4>
                 <ul>
                   {results[type].map((item) => (
-                    <li key={item.id}>{item.title || item.name}</li>
+                    <li key={item.id}>{item.title}</li>
                   ))}
                 </ul>
               </div>

@@ -12,7 +12,7 @@ CREATE TABLE clone.users (
 
 CREATE TABLE clone.projects (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
+  title VARCHAR(100) NOT NULL,
   description TEXT,
   owner_id INTEGER REFERENCES clone.users(id) ON DELETE SET NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 
-export const ProjectDataContext = createContext();
+export const DataContext = createContext();
 
-const ProjectDataProvider = ({ children }) => {
+const DataProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const [epics, setEpics] = useState([]);
   const [stories, setStories] = useState([]);
@@ -19,7 +19,7 @@ const ProjectDataProvider = ({ children }) => {
 
   // EPICS
   const fetchEpics = async (projectId) => {
-    const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/epics/byproject/${projectId}`);
+    const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/epics/getAll`);
     setEpics(res.data);
   };
 
@@ -29,7 +29,7 @@ const ProjectDataProvider = ({ children }) => {
 
   // STORIES
   const fetchStories = async (epicId) => {
-    const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/stories/byepic/${epicId}`);
+    const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/userstories/getAll`);
     setStories(res.data);
   };
 
@@ -39,7 +39,7 @@ const ProjectDataProvider = ({ children }) => {
 
   // TASKS
   const fetchTasks = async (storyId) => {
-    const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tasks/bystory/${storyId}`);
+    const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/tasks/getAll`);
     setTasks(res.data);
   };
 
@@ -54,7 +54,7 @@ const ProjectDataProvider = ({ children }) => {
   };
 
   return (
-    <ProjectDataContext.Provider
+    <DataContext.Provider
       value={{
         // Projects
         projects,
@@ -87,8 +87,8 @@ const ProjectDataProvider = ({ children }) => {
       }}
     >
       {children}
-    </ProjectDataContext.Provider>
+    </DataContext.Provider>
   );
 };
 
-export default ProjectDataProvider;
+export default DataProvider;

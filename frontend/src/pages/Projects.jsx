@@ -15,7 +15,7 @@ export default function Projects() {
       <ul>
         {projects.map((proj) => (
           <li key={proj.id}>
-            <Link to={`/projects/${proj.id}`}>{proj.name}</Link>
+            <Link to={`/projects/${proj.id}`}>{proj.title}</Link>
           </li>
         ))}
       </ul>

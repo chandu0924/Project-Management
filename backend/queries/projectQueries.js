@@ -4,14 +4,14 @@ const projectQueries = {
     getProjectById: "SELECT * FROM clone.projects WHERE id = $1",
 
     createProject: `
-      INSERT INTO clone.projects (name, description)
+      INSERT INTO clone.projects (title, description)
       VALUES ($1, $2)
       RETURNING *
     `,
 
     updateProject: `
       UPDATE clone.projects
-      SET name = $1, description = $2
+      SET title = $1, description = $2
       WHERE id = $3
       RETURNING *
     `,

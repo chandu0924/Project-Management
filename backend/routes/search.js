@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     const searchTerm = `%${query}%`;
 
     const [projects, epics, stories, tasks, users] = await Promise.all([
-      pool.query("SELECT id, name FROM clone.projects WHERE name ILIKE $1 LIMIT 5;", [searchTerm]),
+      pool.query("SELECT id, title FROM clone.projects WHERE title ILIKE $1 LIMIT 5;", [searchTerm]),
       pool.query("SELECT id, title FROM clone.epics WHERE title ILIKE $1 LIMIT 5;", [searchTerm]),
       pool.query("SELECT id, title FROM clone.user_stories WHERE title ILIKE $1 LIMIT 5;", [searchTerm]),
       pool.query("SELECT id, title FROM clone.tasks WHERE title ILIKE $1 LIMIT 5;", [searchTerm]),

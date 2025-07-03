@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import './CreateProject.css';
-import {ProjectDataContext} from '../../context/ProjectDataContext';
+import {DataContext} from '../../context/DataContext';
 
 const CreateProject = ({ onClose }) => {
   const [projectName, setProjectName] = useState('');
   const [projectDesc, setProjectDesc] = useState('');
-  const projectDataContext = useContext(ProjectDataContext);
+  const dataContext = useContext(DataContext);
 
   const handleSubmit = async () => {
     if (!projectName || !projectDesc) {
@@ -16,11 +16,11 @@ const CreateProject = ({ onClose }) => {
 
     try {
       await axios.post('http://localhost:5000/api/projects/create', {
-        name: projectName,
+        title: projectName,
         description: projectDesc,
       });
 
-      projectDataContext.fetchProjects();
+      dataContext.fetchProjects();
       // alert('Project created successfully!');
       onClose();
     } catch (error) {
