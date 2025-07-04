@@ -63,41 +63,42 @@ export default function BacklogDashboard() {
     setPopupData({ ...popupData, visible: false });
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const parsedData = parseInt(projectId);
-        const epicRes = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/epics/getByProjectId/${parsedData}`
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const parsedData = parseInt(projectId);
+      const epicRes = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/epics/getByProjectId/${parsedData}`
+      );
+      const epicsData = epicRes.data;
+
+      const epicPromises = epicsData.map(async (epic) => {
+        const storyRes = await axios.get(
+          `${process.env.REACT_APP_BACKEND_URL}/api/userstories/getByEpicId/${epic.id}`
         );
-        const epicsData = epicRes.data;
+        const stories = storyRes.data;
 
-        const allEpicsWithStoriesAndTasks = [];
-
-        for (const epic of epicsData) {
-          const storyRes = await axios.get(
-            `${process.env.REACT_APP_BACKEND_URL}/api/userstories/getByEpicId/${epic.id}`
+        const storyPromises = stories.map(async (story) => {
+          const taskRes = await axios.get(
+            `${process.env.REACT_APP_BACKEND_URL}/api/tasks/getByStoryId/${story.id}`
           );
-          const stories = storyRes.data;
+          return { ...story, tasks: taskRes.data };
+        });
 
-          for (const story of stories) {
-            const taskRes = await axios.get(
-              `${process.env.REACT_APP_BACKEND_URL}/api/tasks/getByStoryId/${story.id}`
-            );
-            story.tasks = taskRes.data;
-          }
+        const storiesWithTasks = await Promise.all(storyPromises);
+        return { ...epic, stories: storiesWithTasks };
+      });
 
-          allEpicsWithStoriesAndTasks.push({ ...epic, stories });
-        }
+      const allEpicsWithStoriesAndTasks = await Promise.all(epicPromises);
+      setEpics(allEpicsWithStoriesAndTasks);
+    } catch (err) {
+      console.error("Error fetching backlog data:", err);
+    }
+  };
 
-        setEpics(allEpicsWithStoriesAndTasks);
-      } catch (err) {
-        console.error("Error fetching backlog data:", err);
-      }
-    };
+  fetchData();
+}, [projectId]);
 
-    fetchData();
-  }, [projectId]);
 
   const toggleEpic = (id) => {
     setExpandedEpicId((prev) => (prev === id ? null : id));
@@ -244,7 +245,7 @@ export default function BacklogDashboard() {
             </div>
           </div>
 
-          {expandedEpicId === epic.id &&
+          {expandedEpicId === epic.id && epic.stories.length > 0 &&
             epic.stories.map((story) => (
               <div key={story.id} className="story-card-wrapper">
                 <div className="story-card-header">
@@ -313,7 +314,7 @@ export default function BacklogDashboard() {
                   </div>
                 </div>
 
-                {expandedStoryId === story.id && (
+                {expandedStoryId === story.id && story.tasks.length > 0 && (
                   <div className="task-card-list">
                     {story.tasks.map((task) => (
                       <div
