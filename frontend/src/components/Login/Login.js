@@ -6,7 +6,7 @@ import "./Login.css";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [, setCookie] = useCookies(["token"]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

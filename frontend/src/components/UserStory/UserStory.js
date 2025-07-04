@@ -3,22 +3,22 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./UserStory.css";
 
-const dummyData = {
-  epic1: {
-    title: "Authentication",
-    userStories: [
-      {
-        id: "us1",
-        title: "Sign Up",
-        tasks: [
-          { id: "t1", title: "Build signup UI" },
-          { id: "t2", title: "Validate email" },
-          { id: "t3", title: "Connect to API" },
-        ],
-      },
-    ],
-  },
-};
+// const dummyData = {
+//   epic1: {
+//     title: "Authentication",
+//     userStories: [
+//       {
+//         id: "us1",
+//         title: "Sign Up",
+//         tasks: [
+//           { id: "t1", title: "Build signup UI" },
+//           { id: "t2", title: "Validate email" },
+//           { id: "t3", title: "Connect to API" },
+//         ],
+//       },
+//     ],
+//   },
+// };
 
 const UserStory = () => {
   const { epicId,storyId, projectId } = useParams();

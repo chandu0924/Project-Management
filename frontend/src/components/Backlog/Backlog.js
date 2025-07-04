@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Backlog.css"; 
 
-const dummyBacklog = [
-  { id: "epic1", title: "Authentication" },
-  { id: "epic2", title: "Chat System" },
-];
+// const dummyBacklog = [
+//   { id: "epic1", title: "Authentication" },
+//   { id: "epic2", title: "Chat System" },
+// ];
 
 export default function Backlog() {
   const { projectId } = useParams();

@@ -1,17 +1,17 @@
 import "./Profile.css";
-import DataContext from "../../context/DataContext";
-import { useEffect, useContext, useState } from "react";
+// import DataContext from "../../context/DataContext";
+import { useEffect, useState } from "react";
 import {jwtDecode} from "jwt-decode";
 import { Cookies } from 'react-cookie';
 import axios from "axios";
 
 const Profile = () => {
 
-    const dataContext = useContext(DataContext);
-    const cookies = new Cookies();
+    // const dataContext = useContext(DataContext);
     const [user, setUser] = useState({});
-
+    
     useEffect(() => {
+        const cookies = new Cookies();
         const token = cookies.get("token");
         const decoded = jwtDecode(token);
         // console.log("Decoded:", decoded);

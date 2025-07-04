@@ -2,14 +2,13 @@
 import React, { useEffect,  useContext, useState } from 'react';
 import './Sidebar.css';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleRight, faChevronCircleDown } from "@fortawesome/free-solid-svg-icons";
 import {DataContext} from '../../context/DataContext';
 
 const Sidebar = () => {
   // const [projects, setProjects] = useState([]);
-  const [isProjectsExpanded, setIsProjectsExpanded] = useState(true);
+  // const [isProjectsExpanded, setIsProjectsExpanded] = useState(true);
   const [expandedProjectId, setExpandedProjectId] = useState(null);
   const dataContext = useContext(DataContext);
 
@@ -26,15 +25,15 @@ const Sidebar = () => {
   // }, []);
 
   useEffect(() => {
-    console.log("project context", dataContext)
+    // console.log("project context", dataContext)
     dataContext.fetchProjects();
-    console.log("projects fetched", dataContext.projects)
-  }, []);
+    // console.log("projects fetched", dataContext.projects)
+  }, [dataContext]);
 
-  const toggleProjects = () => {
-    setIsProjectsExpanded((prev) => !prev);
-    setExpandedProjectId(null); 
-  };
+  // const toggleProjects = () => {
+  //   setIsProjectsExpanded((prev) => !prev);
+  //   setExpandedProjectId(null); 
+  // };
 
   const toggleProjectMenu = (projectId) => {
     setExpandedProjectId((prev) => (prev === projectId ? null : projectId));
@@ -51,7 +50,8 @@ const Sidebar = () => {
           Projects
         </div>
 
-        {isProjectsExpanded &&
+        {/* {isProjectsExpanded && */}
+        { true &&
           dataContext.projects.map((project) => (
             <div key={project.id} className="nested-section">
               <div

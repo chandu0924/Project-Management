@@ -3,43 +3,43 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./Epic.css";
 
-const dummyBacklog = {
-  epic1: {
-    title: "Authentication",
-    userStories: [
-      {
-        id: "us1",
-        title: "Sign Up",
-        tasks: [
-          { id: "t1", title: "Build signup UI" },
-          { id: "t2", title: "Validate email" },
-          { id: "t3", title: "Connect to API" },
-        ],
-      },
-      {
-        id: "us2",
-        title: "Login",
-        tasks: [
-          { id: "t4", title: "Design login form" },
-          { id: "t5", title: "Implement token auth" },
-        ],
-      },
-    ],
-  },
-  epic2: {
-    title: "Chat System",
-    userStories: [
-      {
-        id: "us3",
-        title: "Send/Receive messages",
-        tasks: [
-          { id: "t6", title: "Socket integration" },
-          { id: "t7", title: "UI updates" },
-        ],
-      },
-    ],
-  },
-};
+// const dummyBacklog = {
+//   epic1: {
+//     title: "Authentication",
+//     userStories: [
+//       {
+//         id: "us1",
+//         title: "Sign Up",
+//         tasks: [
+//           { id: "t1", title: "Build signup UI" },
+//           { id: "t2", title: "Validate email" },
+//           { id: "t3", title: "Connect to API" },
+//         ],
+//       },
+//       {
+//         id: "us2",
+//         title: "Login",
+//         tasks: [
+//           { id: "t4", title: "Design login form" },
+//           { id: "t5", title: "Implement token auth" },
+//         ],
+//       },
+//     ],
+//   },
+//   epic2: {
+//     title: "Chat System",
+//     userStories: [
+//       {
+//         id: "us3",
+//         title: "Send/Receive messages",
+//         tasks: [
+//           { id: "t6", title: "Socket integration" },
+//           { id: "t7", title: "UI updates" },
+//         ],
+//       },
+//     ],
+//   },
+// };
 
 export default function Epic() {
   const { epicId, projectId } = useParams();

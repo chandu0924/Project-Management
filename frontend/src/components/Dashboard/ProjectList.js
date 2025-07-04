@@ -82,7 +82,7 @@ const ProjectList = () => {
 
   useEffect(() => {
     dataContext.fetchProjects();
-  }, []);
+  }, [dataContext]);
 
   return (
     <div className="list-container">

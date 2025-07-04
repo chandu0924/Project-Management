@@ -29,7 +29,7 @@ const TaskList = () => {
             }
         }
         fetchUserStoryData();
-    }, []);
+    }, [projectId,storyId]);
 
     return (
         <div className="task-list-container">

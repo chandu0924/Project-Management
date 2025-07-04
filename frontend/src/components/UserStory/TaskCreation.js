@@ -25,7 +25,7 @@ export default function CreateTaskForm() {
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/users/getAll`)
       .then((res) => setUsers(res.data))
       .catch((err) => console.error("Error fetching users", err));
-  }, []);
+  }, [storyId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

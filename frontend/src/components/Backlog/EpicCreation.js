@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./EpicCreation.css";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
 export default function UnifiedTaskCreation() {
-  const [projects, setProjects] = useState([]);
   const [epics, setEpics] = useState([]);
   const [stories, setStories] = useState([]);
   const [users, setUsers] = useState([]);
@@ -27,8 +26,6 @@ export default function UnifiedTaskCreation() {
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState(1);
   const [message, setMessage] = useState("");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInitialData = async () => {

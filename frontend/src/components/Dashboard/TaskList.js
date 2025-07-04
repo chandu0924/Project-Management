@@ -86,7 +86,7 @@ const TaskList = () => {
 
   useEffect(() => {
     dataContext.fetchTasks();
-  }, []);
+  }, [dataContext]);
 
   return (
     <div className="list-container">

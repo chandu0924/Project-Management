@@ -66,7 +66,7 @@ const EpicList = () => {
 
   useEffect(() => {
     dataContext.fetchEpics();
-  }, []);
+  }, [dataContext]);
 
   return (
     <div className="list-container">

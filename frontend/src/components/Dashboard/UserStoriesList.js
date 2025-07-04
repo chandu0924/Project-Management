@@ -65,7 +65,7 @@ const UserStoryList = () => {
 
   useEffect(() => {
     dataContext.fetchStories();
-  }, []);
+  }, [dataContext]);
 
   return (
     <div className="list-container">
