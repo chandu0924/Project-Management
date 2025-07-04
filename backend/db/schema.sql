@@ -2,7 +2,6 @@ CREATE SCHEMA IF NOT EXISTS clone;
 
 CREATE TABLE clone.users (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(100) ,
   email VARCHAR(100) UNIQUE NOT NULL,
   name VARCHAR(30),
   password TEXT NOT NULL,

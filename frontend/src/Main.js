@@ -20,6 +20,8 @@ import TaskList from './components/Task/TaskList';
 import Task from './components/Task/Task';
 import BacklogDashboard from './components/Backlog/BacklogDashboard';
 import PrevNextContainer from './components/Navigation/PrevNextContainer';
+import Profile from './components/Profile/Profile';
+import Settings from './components/Settings/Settings';
 
 function Main() {
   return (
@@ -34,6 +36,8 @@ function Main() {
               <Route path="/" element={<Dashboard />} />
 
               <Route path="/projects" element={<Projects />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/backlog" element={<Backlog />} />
               <Route path="/sprints" element={<Sprints />} />
               <Route path="/projects/:projectId/tasks" element={<TaskList />} />

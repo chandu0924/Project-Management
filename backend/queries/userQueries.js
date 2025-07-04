@@ -13,7 +13,7 @@ const userQueries = {
     `,
   
     getUserById: `
-      SELECT id, name, email FROM clone.users WHERE id = $1
+      SELECT * FROM clone.users WHERE id = $1
     `,
   
     updateUser: `

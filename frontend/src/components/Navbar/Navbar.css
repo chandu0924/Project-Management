@@ -52,3 +52,7 @@
     background-color: #eee;
   }
   
+  .dropdown-item-profile{
+    text-decoration: none;
+    color: black;
+  }
