@@ -92,13 +92,14 @@ const TaskList = () => {
     <div className="list-container">
       <div className="list-section">
         <h2 className="list-heading">Task List</h2>
-        <ul className="list-list">
+        <div className="task-card-grid">
           {dataContext.tasks.map((task) => (
-            <li key={task.id} className="list-item">
-              <strong>{task.title}</strong> — <em>{task.status}</em>
-            </li>
+            <div key={task.id} className="task-card">
+              <h3>{task.title}</h3>
+              <p>Status: <span className={`status-badge ${task.status.toLowerCase()}`}>{task.status}</span></p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       <div className="list-section">

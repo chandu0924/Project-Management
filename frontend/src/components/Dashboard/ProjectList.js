@@ -82,19 +82,20 @@ const ProjectList = () => {
 
   useEffect(() => {
     dataContext.fetchProjects();
-  }, [dataContext]);
+  }, []);
 
   return (
     <div className="list-container">
       <div className="list-section">
         <h2 className="list-heading">Project List</h2>
-        <ul className="list-list">
-          {dataContext.projects.map((project) => (
-            <li key={project.id} className="list-item">
-              <strong>{project.title}</strong> — <em>{project.status}</em>
-            </li>
-          ))}
-        </ul>
+          <div className="project-card-grid">
+            {dataContext.projects.map((project) => (
+              <div key={project.id} className="project-card">
+                <h3>{project.title}</h3>
+                <p>Status: <span className={`status-badge ${project.status.toLowerCase()}`}>{project.status}</span></p>
+              </div>
+            ))}
+          </div>
       </div>
 
       <div className="list-section">

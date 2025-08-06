@@ -72,13 +72,15 @@ const EpicList = () => {
     <div className="list-container">
       <div className="list-section">
         <h2 className="list-heading">Epic List</h2>
-        <ul className="list-list">
+        <div className="epic-card-grid">
           {dataContext.epics.map((epic) => (
-            <li key={epic.id} className="list-item">
-              <strong>{epic.title}</strong> — <em>{epic.status}</em>
-            </li>
+            <div key={epic.id} className="epic-card">
+              <h3>{epic.title}</h3>
+              <p>Status: <span className={`status-badge ${epic.status.toLowerCase()}`}>{epic.status}</span></p>
+        
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       <div className="list-section">

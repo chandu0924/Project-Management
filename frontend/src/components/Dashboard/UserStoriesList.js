@@ -71,13 +71,14 @@ const UserStoryList = () => {
     <div className="list-container">
       <div className="list-section">
         <h2 className="list-heading">User Story List</h2>
-        <ul className="list-list">
+        <div className="story-card-grid">
           {dataContext.stories.map((story) => (
-            <li key={story.id} className="list-item">
-              <strong>{story.title}</strong> — <em>{story.status}</em>
-            </li>
+            <div key={story.id} className="story-card">
+              <h3>{story.title}</h3>
+              <p>Status: <span className={`status-badge ${story.status.toLowerCase()}`}>{story.status}</span></p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       <div className="list-section">

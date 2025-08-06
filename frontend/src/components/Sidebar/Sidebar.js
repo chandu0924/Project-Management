@@ -1,7 +1,7 @@
 // src/components/Layout/Sidebar.jsx
 import React, { useEffect,  useContext, useState } from 'react';
 import './Sidebar.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleRight, faChevronCircleDown } from "@fortawesome/free-solid-svg-icons";
 import {DataContext} from '../../context/DataContext';
@@ -11,7 +11,7 @@ const Sidebar = () => {
   // const [isProjectsExpanded, setIsProjectsExpanded] = useState(true);
   const [expandedProjectId, setExpandedProjectId] = useState(null);
   const dataContext = useContext(DataContext);
-
+const location = useLocation();
   // useEffect(() => {
   //   const fetchProjects = async () => {
   //     try {
@@ -27,8 +27,8 @@ const Sidebar = () => {
   useEffect(() => {
     // console.log("project context", dataContext)
     dataContext.fetchProjects();
-    // console.log("projects fetched", dataContext.projects)
-  }, [dataContext]);
+    console.log("projects fetched", dataContext.projects)
+  }, []);
 
   // const toggleProjects = () => {
   //   setIsProjectsExpanded((prev) => !prev);
@@ -41,13 +41,18 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <Link to="/">Dashboard</Link>
+      <Link 
+        to="/"
+        className={location.pathname === `/` ? 'sidebar-active-link' : ''}
+      >
+        Dashboard
+      </Link>
 
       <div className="collapsible-section">
         {/* <div className="collapsible-header" onClick={toggleProjects}> */}
         <div className="collapsible-header">
           {/* {isProjectsExpanded ? '▼' : '▶'}  Projects  */}
-          Projects
+           Projects
         </div>
 
         {/* {isProjectsExpanded && */}
@@ -71,9 +76,24 @@ const Sidebar = () => {
 
               {expandedProjectId === project.id && (
                 <div className="sub-links">
-                  <Link to={`/projects/${project.id}`}>Backlog</Link>
-                  <Link to={`/projects/${project.id}/sprints`}>Sprints</Link>
-                  <Link to={`/projects/${project.id}/tasks`}>Tasks</Link>
+                  <Link
+                    to={`/projects/${project.id}`}
+                    className={location.pathname === `/projects/${project.id}` ? 'sidebar-active-link' : ''}
+                  >
+                    Backlog
+                  </Link>
+                  <Link
+                    to={`/projects/${project.id}/sprints`}
+                    className={location.pathname === `/projects/${project.id}/sprints` ? 'sidebar-active-link' : ''}
+                  >
+                    Sprints
+                  </Link>
+                  <Link
+                    to={`/projects/${project.id}/tasks`}
+                    className={location.pathname === `/projects/${project.id}/tasks` ? 'sidebar-active-link' : ''}
+                  >
+                    Tasks
+                  </Link>
                 </div>
               )}
             </div>
